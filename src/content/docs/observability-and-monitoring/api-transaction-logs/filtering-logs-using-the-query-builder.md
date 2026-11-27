@@ -22,15 +22,15 @@ To filter logs using the Query Builder:
 1. To add another condition, enter and select a new field.
   #### Example query
 
-  ```text
-  data.request.path = "/api/v1/checkout"
-  ```
+   ```text
+   data.request.path = "/api/v1/checkout"
+   ```
 
   To combine multiple conditions across different data types:
 
-  ```text
-  data.request.path = "/api/v1/checkout" AND metadata.request.timestamp = 1721800000
-  ```
+   ```text
+   data.request.path = "/api/v1/checkout" AND metadata.request.timestamp = 1721800000
+   ```
 1. Select **Validate**. A valid query passes validation; an invalid query doesn't.
 1. Select **Execute**.
 

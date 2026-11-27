@@ -211,3 +211,27 @@ header .site-title {
   letter-spacing: -0.01em;
   color: var(--sl-color-white);
 }
+
+/* ---------- Surfaces used by the home page and cards ---------- */
+:root {
+  --apiwiz-hero-bg: linear-gradient(180deg, #0f1422 0%, #0c0f16 100%);
+  --apiwiz-panel-bg: #10141f;
+  --apiwiz-grid: rgb(255 255 255 / 0.05);
+  --apiwiz-glow: 0.28;
+}
+:root[data-theme='light'] {
+  --apiwiz-hero-bg: linear-gradient(180deg, #f6f8ff 0%, #ffffff 100%);
+  --apiwiz-panel-bg: #f7f8fb;
+  --apiwiz-grid: rgb(16 19 28 / 0.06);
+  --apiwiz-glow: 0.22;
+}
+/* Home page: the Home component has its own hero, so drop the title panel and widen the column */
+.content-panel:has(.home-marker) {
+  display: none;
+}
+.content-panel:has(.home) {
+  border-top: none;
+}
+.content-panel:has(.home) .sl-container {
+  max-width: 80rem;
+}

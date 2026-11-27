@@ -61,9 +61,9 @@ To import the module and register APIwiz telemetry for IIS, do the following:
 
 1. Open a PowerShell terminal.
 1. Import the module:
-  ```shell
-  Import-Module {path}\Apiwiz.Dotnet.Auto.psm1
-  ```
+   ```shell
+   Import-Module {path}\Apiwiz.Dotnet.Auto.psm1
+   ```
 
 ### Step 4: Install the telemetry core
 

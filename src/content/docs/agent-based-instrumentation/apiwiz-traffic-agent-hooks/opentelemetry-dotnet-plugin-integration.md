@@ -27,9 +27,9 @@ To download and install the plugin, do the following:
 
 1. Download the plugin from the provided [link](https://drive.google.com/file/d/18QcTeK9Un1MWCY9OoTFLspYIyjSLAadH/view?usp=sharing).
 1. Copy the plugin DLL to the $OTEL\_DOTNET\_AUTO\_HOME/net/ directory:
-  ```bash
-  cp {{directory}}/apiwiz-opentelemetry-dotnet-plugin.dll $OTEL_DOTNET_AUTO_HOME/net/
-  ```
+   ```bash
+   cp {{directory}}/apiwiz-opentelemetry-dotnet-plugin.dll $OTEL_DOTNET_AUTO_HOME/net/
+   ```
 
 ### Step 2: Configure the plugin environment variables
 

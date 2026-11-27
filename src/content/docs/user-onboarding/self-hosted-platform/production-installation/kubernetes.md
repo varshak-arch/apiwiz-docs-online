@@ -81,16 +81,16 @@ The MongoDB nodes in the cluster need a shared secret key to authenticate with e
 Do the following:
 
 1. On Node 1, create the secret key file:
-  ```text
-  sudo mkdir -p /opt/apiwiz/secret && \
-  sudo openssl rand -base64 756 > /opt/apiwiz/secret/mongo-cluster-keyfile
-  ```
+   ```text
+   sudo mkdir -p /opt/apiwiz/secret && \
+   sudo openssl rand -base64 756 > /opt/apiwiz/secret/mongo-cluster-keyfile
+   ```
 1. Copy the key file from Node 1 to Node 2 and Node 3.
 1. On Node 1, Node 2, and Node 3, secure the file permissions:
-  ```text
-  sudo chmod 400 /opt/apiwiz/secret/mongo-cluster-keyfile && \
-  sudo chown mongodb:mongodb /opt/apiwiz/secret/mongo-cluster-keyfile
-  ```
+   ```text
+   sudo chmod 400 /opt/apiwiz/secret/mongo-cluster-keyfile && \
+   sudo chown mongodb:mongodb /opt/apiwiz/secret/mongo-cluster-keyfile
+   ```
 
 All three nodes share a secured cluster key file.
 
@@ -101,45 +101,45 @@ Create the database users that APIwiz and the Developer Portal use.
 **Prerequisites**: The cluster key file is in place.
 
 1. Log in to Node 1 and create a template folder:
-  ```text
-  sudo mkdir -p /opt/apiwiz/templates
-  ```
+   ```text
+   sudo mkdir -p /opt/apiwiz/templates
+   ```
 1. Add the following script to `/opt/apiwiz/templates/create_db_user.js`:
-  ```javascript
-  db = db.getSiblingDB('apiwiz');
-  db.createUser(
-  {
-      user: "DB_USER",
-      pwd: "DB_PASS",
-      roles: [ { role: "root", db: "admin" } ]
-  }
-  ),
-  db = db.getSiblingDB('offline-devportal');
-  db.createUser(
-  {
-      user: "DB_USER",
-      pwd: "DB_PASS",
-      roles: [ { role: "root", db: "admin" } ]
-  }
-  )
-  db = db.getSiblingDB('admin');
-  db.createUser(
-  {
-      user: "DB_USER",
-      pwd: "DB_PASS",
-      roles: [ { role: "root", db: "admin" } ]
-  }
-  )
-  ```
+   ```javascript
+   db = db.getSiblingDB('apiwiz');
+   db.createUser(
+   {
+       user: "DB_USER",
+       pwd: "DB_PASS",
+       roles: [ { role: "root", db: "admin" } ]
+   }
+   ),
+   db = db.getSiblingDB('offline-devportal');
+   db.createUser(
+   {
+       user: "DB_USER",
+       pwd: "DB_PASS",
+       roles: [ { role: "root", db: "admin" } ]
+   }
+   )
+   db = db.getSiblingDB('admin');
+   db.createUser(
+   {
+       user: "DB_USER",
+       pwd: "DB_PASS",
+       roles: [ { role: "root", db: "admin" } ]
+   }
+   )
+   ```
 1. Replace the placeholder values with your MongoDB credentials:
-  ```text
-  sed -i "s/DB_USER/<MongoDBUserName>/g" /opt/apiwiz/templates/create_db_user.js
-  sed -i "s/DB_PASS/<MongoDBPassword>/g" /opt/apiwiz/templates/create_db_user.js
-  ```
+   ```text
+   sed -i "s/DB_USER/<MongoDBUserName>/g" /opt/apiwiz/templates/create_db_user.js
+   sed -i "s/DB_PASS/<MongoDBPassword>/g" /opt/apiwiz/templates/create_db_user.js
+   ```
 1. Run the script:
-  ```text
-  mongosh admin /opt/apiwiz/templates/create_db_user.js
-  ```
+   ```text
+   mongosh admin /opt/apiwiz/templates/create_db_user.js
+   ```
 
 MongoDB users exist for the `apiwiz`, `offline-devportal`, and `admin` databases.
 
@@ -176,18 +176,18 @@ Initialize the replica set and add the secondary nodes.
 **Prerequisites**: MongoDB is configured for replication on all nodes.
 
 1. Log in to Node 1 and initialize the replica set:
-  ```text
-  mongosh -u <MongoDBUsername> -p <MongoDBpassword> --eval "rs.initiate()"
-  ```
+   ```text
+   mongosh -u <MongoDBUsername> -p <MongoDBpassword> --eval "rs.initiate()"
+   ```
 1. Add the secondary nodes:
-  ```text
-  mongosh -u <MongoDBUsername> -p <MongoDBpassword> --eval "rs.add('<MONGOClientIP1>')"
-  mongosh -u <MongoDBUserName> -p <MongoDBPassword> --eval "rs.add('<MONGOClientIP2>')"
-  ```
+   ```text
+   mongosh -u <MongoDBUsername> -p <MongoDBpassword> --eval "rs.add('<MONGOClientIP1>')"
+   mongosh -u <MongoDBUserName> -p <MongoDBPassword> --eval "rs.add('<MONGOClientIP2>')"
+   ```
 1. Check the replication status:
-  ```text
-  mongosh -u <MongoDBUserName> -p <MongoDBPassword> --eval "rs.status()"
-  ```
+   ```text
+   mongosh -u <MongoDBUserName> -p <MongoDBPassword> --eval "rs.status()"
+   ```
 
 The MongoDB replica set is initialized and running across all nodes.
 
@@ -198,97 +198,97 @@ APIwiz organizes data into workspaces, dedicated areas for teams or projects. Th
 **Prerequisites**: MongoDB replication is initialized.
 
 1. On Node 1, add the following script to `/opt/apiwiz/templates/create_workspace.js`, and replace `WORKSPACE_NAME`, `LOGIN_ID`, `EMAIL_ID`, `LAST_NAME`, and `FIRST_NAME` with your values:
-  ```javascript
-  var workspaceName ='WORKSPACE_NAME';
-  var plan = 'enterprise';
-  var loginId = 'LOGIN_ID';
-  var emailId = 'EMAIL_ID';
-  var lastName = 'LAST_NAME';
-  var firstName = 'FIRST_NAME';
-  var key = UUID().toString('hex').replace(/^(.{8})(.{4})(.{4})(.{4})(.{12})$/, '$1-$2-$3-$4-$5');
-  var licenceKey = UUID().toString('hex').replace(/^(.{8})(.{4})(.{4})(.{4})(.{12})$/, '$1-$2-$3-$4-$5');
-  var time = Date.now();
+   ```javascript
+   var workspaceName ='WORKSPACE_NAME';
+   var plan = 'enterprise';
+   var loginId = 'LOGIN_ID';
+   var emailId = 'EMAIL_ID';
+   var lastName = 'LAST_NAME';
+   var firstName = 'FIRST_NAME';
+   var key = UUID().toString('hex').replace(/^(.{8})(.{4})(.{4})(.{4})(.{12})$/, '$1-$2-$3-$4-$5');
+   var licenceKey = UUID().toString('hex').replace(/^(.{8})(.{4})(.{4})(.{4})(.{12})$/, '$1-$2-$3-$4-$5');
+   var time = Date.now();
 
-  db.Users.Workspace.List.insertOne(
-  {
-      '_id' : workspaceName,
-      'planId' : plan,
-      'status' : 'active',
-      'tenant' : workspaceName,
-      'key' : key,
-      'seats' : NumberLong("200"),
-      'paymentSchedule' : 'monthly',
-      'trialPeriod' : '14',
-      'isTrial' : false,
-      'expiresOn' : ISODate('2021-12-03T12:18:07.469Z'),
-      'licenceKey' : licenceKey ,
-      'ssoEnabled' : false,
-      '_class' : 'com.itorix.apiwiz.identitymanagement.model.Workspace'
-  }
-  );
+   db.Users.Workspace.List.insertOne(
+   {
+       '_id' : workspaceName,
+       'planId' : plan,
+       'status' : 'active',
+       'tenant' : workspaceName,
+       'key' : key,
+       'seats' : NumberLong("200"),
+       'paymentSchedule' : 'monthly',
+       'trialPeriod' : '14',
+       'isTrial' : false,
+       'expiresOn' : ISODate('2021-12-03T12:18:07.469Z'),
+       'licenceKey' : licenceKey ,
+       'ssoEnabled' : false,
+       '_class' : 'com.itorix.apiwiz.identitymanagement.model.Workspace'
+   }
+   );
 
-  db.Users.List.insertOne(
-  {
-      "loginId" : loginId,
-      "email" : emailId,
-      "password" : "ef85585805585e73a697e078263de63558287b37d497eef9db712dcbf36bed24",
-      "passwordLastChangedDate" : 1725000151162,
-      "lastName" : lastName,
-      "firstName" : firstName,
-      "userStatus" : "active",
-      "workspaces" : [
-      {
-          "roles" : [
-              "Developer",
-              "Admin",
-              "Portal",
-              "Analyst",
-              "Project-Admin",
-              "QA",
-              "Operation",
-              "Test",
-              "Default"
-          ],
-          "workspace" : {
-              '_id' : workspaceName,
-              'planId' : plan,
-              'status' : 'active',
-              'tenant' : workspaceName,
-              'key' : key,
-              'seats': NumberLong("200"),
-              'paymentSchedule' : 'monthly',
-              'trialPeriod' : '14',
-              'isTrial' : false,
-              'expiresOn' : ISODate('2021-12-03T12:18:07.469Z'),
-              'licenceKey' : licenceKey ,
-              'ssoEnabled' : false,
-              '_class' : 'com.itorix.apiwiz.identitymanagement.model.Workspace'
-          },
-          "userType" : "Site-Admin",
-          "acceptInvite" : true,
-          "active" : true
-      }],
-      "userCount" : NumberLong("0"),
-      "subscribeNewsLetter" : false,
-      "invited" : false,
-      "cts" : NumberLong(String(time)),
-      "mts" : NumberLong(String(time)),
-      "_class" : "com.itorix.apiwiz.identitymanagement.model.User"
-  }
-  );
+   db.Users.List.insertOne(
+   {
+       "loginId" : loginId,
+       "email" : emailId,
+       "password" : "ef85585805585e73a697e078263de63558287b37d497eef9db712dcbf36bed24",
+       "passwordLastChangedDate" : 1725000151162,
+       "lastName" : lastName,
+       "firstName" : firstName,
+       "userStatus" : "active",
+       "workspaces" : [
+       {
+           "roles" : [
+               "Developer",
+               "Admin",
+               "Portal",
+               "Analyst",
+               "Project-Admin",
+               "QA",
+               "Operation",
+               "Test",
+               "Default"
+           ],
+           "workspace" : {
+               '_id' : workspaceName,
+               'planId' : plan,
+               'status' : 'active',
+               'tenant' : workspaceName,
+               'key' : key,
+               'seats': NumberLong("200"),
+               'paymentSchedule' : 'monthly',
+               'trialPeriod' : '14',
+               'isTrial' : false,
+               'expiresOn' : ISODate('2021-12-03T12:18:07.469Z'),
+               'licenceKey' : licenceKey ,
+               'ssoEnabled' : false,
+               '_class' : 'com.itorix.apiwiz.identitymanagement.model.Workspace'
+           },
+           "userType" : "Site-Admin",
+           "acceptInvite" : true,
+           "active" : true
+       }],
+       "userCount" : NumberLong("0"),
+       "subscribeNewsLetter" : false,
+       "invited" : false,
+       "cts" : NumberLong(String(time)),
+       "mts" : NumberLong(String(time)),
+       "_class" : "com.itorix.apiwiz.identitymanagement.model.User"
+   }
+   );
 
-  db.API.Clients.List.insertOne(
-  {
-      _id: workspaceName,
-      clientSecret: key,
-      disabled: false
-  }
-  );
-  ```
+   db.API.Clients.List.insertOne(
+   {
+       _id: workspaceName,
+       clientSecret: key,
+       disabled: false
+   }
+   );
+   ```
 1. Run the script:
-  ```text
-  mongosh mongodb://<MongoDBUserName>:<MongoDBPassword>@127.0.0.1/apiwiz /opt/apiwiz/templates/create_workspace.js
-  ```
+   ```text
+   mongosh mongodb://<MongoDBUserName>:<MongoDBPassword>@127.0.0.1/apiwiz /opt/apiwiz/templates/create_workspace.js
+   ```
 
 The first APIwiz workspace and administrator account are created.
 
@@ -299,14 +299,14 @@ Import the static reference data that APIwiz requires.
 **Prerequisites**: The first workspace is created.
 
 1. Create the import folder:
-  ```text
-  mkdir -p /opt/apiwiz/mongo
-  ```
+   ```text
+   mkdir -p /opt/apiwiz/mongo
+   ```
 1. Upload `db-collections.zip` to `/opt/apiwiz/mongo`.
 1. Restore the data:
-  ```text
-  mongorestore --host <pvtIP> -u <MongoDBUserName> -p <MongoDBPassword> --port 27017 --gzip /opt/apiwiz/mongo/db-collections
-  ```
+   ```text
+   mongorestore --host <pvtIP> -u <MongoDBUserName> -p <MongoDBPassword> --port 27017 --gzip /opt/apiwiz/mongo/db-collections
+   ```
 
 The static reference data is imported into MongoDB.
 
@@ -330,24 +330,24 @@ MongoDB can run on a single node or across multiple nodes.
 **Prerequisites**: Ansible and the playbook package are installed, and firewall rules are configured.
 
 1. Log in to the Ansible node and go to the MongoDB playbook directory:
-  ```text
-  cd {{path}}/apiwiz-db-automation-ansible/mongodb
-  ```
+   ```text
+   cd {{path}}/apiwiz-db-automation-ansible/mongodb
+   ```
 1. In `group_vars/mongo-replicaset.yaml`, enter your MongoDB username and password:
-  ```text
-  vim group_vars/mongo-replicaset.yaml
-  ```
+   ```text
+   vim group_vars/mongo-replicaset.yaml
+   ```
 1. In `inventory/replicaset.ini`, update the replica set nodes and SSH user:
-  ```text
-  node1 ansible_host=<IP1> ansible_user=<user>
-  node2 ansible_host=<IP2> ansible_user=<user>
-  node3 ansible_host=<IP3> ansible_user=<user>
-  ```
+   ```text
+   node1 ansible_host=<IP1> ansible_user=<user>
+   node2 ansible_host=<IP2> ansible_user=<user>
+   node3 ansible_host=<IP3> ansible_user=<user>
+   ```
 1. Run the Ansible playbook:
-  ```text
-  cd {{path}}/apiwiz-db-automation-ansible/mongodb/playbook
-  ansible-playbook -i ../inventory/replicaset.ini replicaset.yaml
-  ```
+   ```text
+   cd {{path}}/apiwiz-db-automation-ansible/mongodb/playbook
+   ansible-playbook -i ../inventory/replicaset.ini replicaset.yaml
+   ```
 
 The MongoDB replica set is installed and configured.
 
@@ -356,35 +356,35 @@ The MongoDB replica set is installed and configured.
 **Prerequisites**: Ansible and the playbook package are installed, and firewall rules are configured.
 
 1. Log in to the master node where the Ansible files are uploaded, and go to the TimescaleDB playbook directory:
-  ```text
-  cd path/apiwiz-db-automation-ansible/timescaledb
-  ```
+   ```text
+   cd path/apiwiz-db-automation-ansible/timescaledb
+   ```
 1. In the `inventory` file, enter your PostgreSQL user and password:
-  ```text
-  vim inventory
-  ---
-  [master]
-  master-node ansible_host=<IP1> ansible_user=<user>
+   ```text
+   vim inventory
+   ---
+   [master]
+   master-node ansible_host=<IP1> ansible_user=<user>
 
-  [replica]
-  replica-node ansible_host=<IP2> ansible_user=<user>
+   [replica]
+   replica-node ansible_host=<IP2> ansible_user=<user>
 
-  [all:vars]
-  pg_version=16
-  tsdb_version=2.18.0
-  pg_password='<password>'
-  pg_repuser=<user>
-  repuser_password='<password>'
-  pg_rep_slot=replica_1_slot
-  pg_database=apiwiz
-  allow_cidr=10.1.0.0/24
-  ```
+   [all:vars]
+   pg_version=16
+   tsdb_version=2.18.0
+   pg_password='<password>'
+   pg_repuser=<user>
+   repuser_password='<password>'
+   pg_rep_slot=replica_1_slot
+   pg_database=apiwiz
+   allow_cidr=10.1.0.0/24
+   ```
 1. Complete the prerequisites in the [TimescaleDB Ansible documentation](#bookmark-4221ffaf-95c6-44d1-994b-5a5b5e2d4310).
 1. Run the Ansible playbook:
-  ```text
-  cd {{path}}/apiwiz-db-automation-ansible/timescaledb
-  ansible-playbook -i inventory playbook.yml
-  ```
+   ```text
+   cd {{path}}/apiwiz-db-automation-ansible/timescaledb
+   ansible-playbook -i inventory playbook.yml
+   ```
 
 TimescaleDB is installed with a master-replica configuration.
 
@@ -441,14 +441,14 @@ Deploy the core APIwiz platform components to your Kubernetes cluster.
 Point `kubectl` to the correct Kubernetes cluster before you deploy APIwiz.
 
 1. Check the current context:
-  ```text
-  kubectl config current-context
-  ```
+   ```text
+   kubectl config current-context
+   ```
 1. Set the context to your cluster. Replace `my-cluster-name` with your actual cluster name:
-  ```text
-  kubectl config use-context my-cluster-name
-  kubectl config set-cluster my-cluster-name
-  ```
+   ```text
+   kubectl config use-context my-cluster-name
+   kubectl config set-cluster my-cluster-name
+   ```
 
 #### Creating the namespace
 
@@ -471,17 +471,17 @@ kubectl create namespace apiwiz-system
 Deploy each APIwiz component using its deployment file.
 
 1. Deploy an application component:
-  ```text
-  kubectl -n apiwiz-system apply -f <app-name>-deploy.yaml
-  ```
+   ```text
+   kubectl -n apiwiz-system apply -f <app-name>-deploy.yaml
+   ```
 1. Deploy the OPA server:
-  ```text
-  kubectl -n apiwiz-system apply -f opa-server-deploy.yaml
-  ```
+   ```text
+   kubectl -n apiwiz-system apply -f opa-server-deploy.yaml
+   ```
 1. Deploy RabbitMQ:
-  ```text
-  kubectl -n apiwiz-system apply -f rabbitmq-deploy.yaml
-  ```
+   ```text
+   kubectl -n apiwiz-system apply -f rabbitmq-deploy.yaml
+   ```
 
 The core APIwiz platform components are running in the `apiwiz-system` namespace.
 

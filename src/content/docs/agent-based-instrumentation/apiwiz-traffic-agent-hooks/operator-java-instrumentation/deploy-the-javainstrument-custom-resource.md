@@ -5,13 +5,13 @@ title: "Deploy the JavaInstrument custom resource"
 The `JavaInstrument` resource contains the configuration values the operator applies during injection, including workspace details, API keys, and logger index settings.
 
 1. In your target namespace, deploy the `JavaInstrument` YAML file:
-  ```text
-  kubectl -n <namespace> apply -f apiwiz-javainstrument.yaml
-  ```
+   ```text
+   kubectl -n <namespace> apply -f apiwiz-javainstrument.yaml
+   ```
 1. Validate that the resource deployed:
-  ```text
-  kubectl -n <namespace> get JavaInstrument
-  ```
+   ```text
+   kubectl -n <namespace> get JavaInstrument
+   ```
 
 The `JavaInstrument` resource is active in the specified namespace.
 

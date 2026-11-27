@@ -69,6 +69,30 @@ HTML_OK = {'br', 'img', 'a', 'p', 'b', 'i', 'u', 'em', 'strong', 'sup', 'sub', '
 DATAIMG = re.compile(r'!\[([^\]]*)\]\(data:image/(png|jpe?g|gif|webp|svg\+xml);base64,([A-Za-z0-9+/=\s]+)\)')
 OLDLINK = re.compile(r'https?://docs\.apiwiz\.io/guides\?[^)\s"]*?pageId=([0-9a-f]{24})[^)\s"]*?(#[^)\s"]*)?(?=[)\s"]|$)')
 
+def fix_list_fences(body):
+    """The CMS indents code fences inside numbered lists by 2 spaces, which Markdown
+    needs to be 3 ("1. " width). Shift those blocks so they stay inside the list item."""
+    out, in_fence, shift, last_ol = [], False, 0, False
+    for line in body.split('\n'):
+        stripped = line.lstrip(' ')
+        indent = len(line) - len(stripped)
+        if not in_fence:
+            if re.match(r'\d+\. ', stripped) and indent == 0:
+                last_ol = True
+            elif re.match(r'[-*] ', stripped) and indent == 0:
+                last_ol = False
+            elif stripped and indent == 0 and not stripped.startswith('```'):
+                last_ol = False
+            if stripped.startswith('```'):
+                in_fence = True
+                shift = 1 if (last_ol and indent == 2) else 0
+        elif stripped.startswith('```'):
+            in_fence = False
+            out.append(' ' * shift + line if line.strip() else line)
+            continue
+        out.append(' ' * shift + line if (in_fence and line.strip()) else line)
+    return '\n'.join(out)
+
 def escape_text(seg):
     def esc(m):
         tag = m.group(1).lower()
@@ -101,6 +125,7 @@ for p in kept:
     body = OLDLINK.sub(fix, body)
     # Escape placeholder "tags" like <your-host> outside code so they render as text.
     body = ''.join(seg if i % 2 else escape_text(seg) for i, seg in enumerate(FENCE.split(body)))
+    body = fix_list_fences(body)
     body = body.replace('\\-', '-')
     for rx, rep in SECRETS:
         body = rx.sub(rep, body)

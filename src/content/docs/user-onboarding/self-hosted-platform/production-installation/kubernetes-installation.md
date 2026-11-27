@@ -57,71 +57,71 @@ The MongoDB servers in the cluster need a secure way to verify they belong to th
 
 1. Log in to Node 1.
 1. Run the following command to create a secret key file:
-  ```text
-  sudo mkdir -p /opt/apiwiz/secret && \
-     sudo openssl rand -base64 756 > /opt/apiwiz/secret/mongo-cluster-keyfile
-  ```
+   ```text
+   sudo mkdir -p /opt/apiwiz/secret && \
+      sudo openssl rand -base64 756 > /opt/apiwiz/secret/mongo-cluster-keyfile
+   ```
 1. Copy the generated key file to Node 2 and Node 3.
 1. On Node 1, Node 2, and Node 3, run the following command to secure the file permissions:
-  ```text
-  sudo chmod 400 /opt/apiwiz/secret/mongo-cluster-keyfile && \
-     sudo chown mongodb:mongodb /opt/apiwiz/secret/mongo-cluster-keyfile
-  ```
+   ```text
+   sudo chmod 400 /opt/apiwiz/secret/mongo-cluster-keyfile && \
+      sudo chown mongodb:mongodb /opt/apiwiz/secret/mongo-cluster-keyfile
+   ```
 
 ### Create database users on the MongoDB primary
 
 1. Log in to Node 1.
 1. Run the following command to create a template folder:
-  ```text
-  sudo mkdir -p /opt/apiwiz/templates
-  ```
+   ```text
+   sudo mkdir -p /opt/apiwiz/templates
+   ```
 1. Add the following script to `/opt/apiwiz/templates/create_db_user.js`:
 
 1. Run the following commands to replace the placeholder values with your MongoDB username and password:
-  ```text
-  sed -i "s/DB_USER/<MongoDBUserName>/g" /opt/apiwiz/templates/create_db_user.js
-     sed -i "s/DB_PASS/<MongoDBPassword>/g" /opt/apiwiz/templates/create_db_user.js
-  ```
+   ```text
+   sed -i "s/DB_USER/<MongoDBUserName>/g" /opt/apiwiz/templates/create_db_user.js
+      sed -i "s/DB_PASS/<MongoDBPassword>/g" /opt/apiwiz/templates/create_db_user.js
+   ```
 1. Run the following command to execute the script:
-  ```text
-  mongosh admin /opt/apiwiz/templates/create_db_user.js
-  ```
+   ```text
+   mongosh admin /opt/apiwiz/templates/create_db_user.js
+   ```
 
 ### Configure MongoDB on all three nodes
 
 1. On Node 1, Node 2, and Node 3, run the following commands to update `/etc/mongod.conf`:
-  ```text
-  sed -i "/#security:/c security:" /etc/mongod.conf
-     sed -i "/security/a  \ \ \ keyFile: /opt/apiwiz/secret/mongo-cluster-keyfile" /etc/mongod.conf
-     sed -i "s/bindIp: 127.0.0.1/bindIp: 0.0.0.0/g" /etc/mongod.conf
-     ## Enable replication ##
-     sed -i "/#replication:/c replication:" /etc/mongod.conf
-     sed -i '/replication/a  \ \ \ replSetName: "rs"' /etc/mongod.conf
-  ```
+   ```text
+   sed -i "/#security:/c security:" /etc/mongod.conf
+      sed -i "/security/a  \ \ \ keyFile: /opt/apiwiz/secret/mongo-cluster-keyfile" /etc/mongod.conf
+      sed -i "s/bindIp: 127.0.0.1/bindIp: 0.0.0.0/g" /etc/mongod.conf
+      ## Enable replication ##
+      sed -i "/#replication:/c replication:" /etc/mongod.conf
+      sed -i '/replication/a  \ \ \ replSetName: "rs"' /etc/mongod.conf
+   ```
 1. Run the following command to restart the MongoDB service:
-  ```text
-  sudo service mongod restart
-  ```
+   ```text
+   sudo service mongod restart
+   ```
 
 ### Initialize replication
 
 1. Log in to Node 1.
 1. Run the following command to initiate the replica set:
-  ```text
-  mongosh -u <MongoDBUsername> -p <MongoDBpassword> --eval "rs.initiate()"
-  ```
+   ```text
+   mongosh -u <MongoDBUsername> -p <MongoDBpassword> --eval "rs.initiate()"
+   ```
 1. Run the following command to add the second MongoDB node to the replica set:
-  ```text
-  mongosh -u <MongoDBUsername> -p <MongoDBpassword> --eval "rs.add('<MONGOClientIP1>')"
-  ```
+   ```text
+   mongosh -u <MongoDBUsername> -p <MongoDBpassword> --eval "rs.add('<MONGOClientIP1>')"
+   ```
 1. Run the following command to add the third MongoDB node to the replica set:
-  ```text
-  mongosh -u <MongoDBUserName> -p <MongoDBPassword> --eval "rs.add('<MONGOClientIP2>')"
-  ```
+   ```text
+   mongosh -u <MongoDBUserName> -p <MongoDBPassword> --eval "rs.add('<MONGOClientIP2>')"
+   ```
 1. Run the following command to verify the replication status:
-  ```text
-  mongosh -u <MongoDBUserName> -p <MongoDBPassword> --eval "rs.status()"
-  ```
+   ```text
+   mongosh -u <MongoDBUserName> -p <MongoDBPassword> --eval "rs.status()"
+   ```
 
 ### Create the first APIwiz workspace
 
@@ -130,21 +130,21 @@ This step creates your first Workspace and initial administrator user account.
 1. On Node 1, add the following script to `/opt/apiwiz/templates/create_workspace.js`, replacing `WORKSPACE_NAME`, `LOGIN_ID`, `EMAIL_ID`, `LAST_NAME`, and `FIRST_NAME` with your values:
 
 1. Run the following command to execute the script:
-  ```text
-  mongosh mongodb://<MongoDBUserName>: <MongoDBPassword>@127.0.0.1/apiwiz /opt/apiwiz/templates/create_workspace.js
-  ```
+   ```text
+   mongosh mongodb://<MongoDBUserName>: <MongoDBPassword>@127.0.0.1/apiwiz /opt/apiwiz/templates/create_workspace.js
+   ```
 
 ### Import static data
 
 1. Run the following command to create the MongoDB import folder:
-  ```text
-  mkdir -p /opt/apiwiz/mongo
-  ```
+   ```text
+   mkdir -p /opt/apiwiz/mongo
+   ```
 1. Upload the `db-collections.zip` file to `/opt/apiwiz/mongo`.
 1. Run the following command to restore the data:
-  ```text
-  mongorestore --host <pvtIP> -u <MongoDBUserName> -p <MongoDBPassword> --port 27017 --gzip /opt/apiwiz/mongo/db-collections
-  ```
+   ```text
+   mongorestore --host <pvtIP> -u <MongoDBUserName> -p <MongoDBPassword> --port 27017 --gzip /opt/apiwiz/mongo/db-collections
+   ```
 
 ## Install MongoDB and TimescaleDB using an Ansible playbook \(alternative method\)
 
@@ -165,54 +165,54 @@ MongoDB can run on a single node or on multiple nodes. To install MongoDB as a r
 
 1. Log in to the Ansible node.
 1. Change to the MongoDB directory:
-  ```text
-  cd {{path}}/apiwiz-db-automation-ansible/mongodb
-  ```
+   ```text
+   cd {{path}}/apiwiz-db-automation-ansible/mongodb
+   ```
 1. In the `group_vars/mongo-replicaset.yaml` file, provide the appropriate values for `<secure_username>` and `<secure_password>`:
-  ```text
-  vim group_vars/mongo-replicaset.yaml
-  ```
+   ```text
+   vim group_vars/mongo-replicaset.yaml
+   ```
 1. In the `inventory/replicaset.ini` file, update the replica set nodes and SSH user:
-  ```text
-  node1 ansible_host=<IP1> ansible_user=<user>
-     node2 ansible_host=<IP2> ansible_user=<user>
-     node3 ansible_host=<IP3> ansible_user=<user>
-  ```
+   ```text
+   node1 ansible_host=<IP1> ansible_user=<user>
+      node2 ansible_host=<IP2> ansible_user=<user>
+      node3 ansible_host=<IP3> ansible_user=<user>
+   ```
 1. Run the Ansible playbook:
 
 ### Install TimescaleDB as a master-replica setup using Ansible
 
 1. Log in to the master node where the Ansible file is uploaded.
 1. Change to the TimescaleDB directory:
-  ```text
-  cd path/apiwiz-db-automation-ansible/timescaledb
-  ```
+   ```text
+   cd path/apiwiz-db-automation-ansible/timescaledb
+   ```
 1. In the inventory file, provide the appropriate values for the PostgreSQL `<user>` and `<password>`:
-  ```text
-  vim inventory
-     ---
-     [master]
-     master-node ansible_host=<IP1> ansible_user=<user>
+   ```text
+   vim inventory
+      ---
+      [master]
+      master-node ansible_host=<IP1> ansible_user=<user>
 
-     [replica]
-     replica-node ansible_host=<IP2> ansible_user=<user>
+      [replica]
+      replica-node ansible_host=<IP2> ansible_user=<user>
 
-     [all:vars]
-     pg_version=16
-     tsdb_version=2.18.0
-     pg_password='<password>'
-     pg_repuser=<user>
-     repuser_password='<password>'
-     pg_rep_slot=replica_1_slot
-     pg_database=apiwiz
-     allow_cidr=10.1.0.0/24
-  ```
+      [all:vars]
+      pg_version=16
+      tsdb_version=2.18.0
+      pg_password='<password>'
+      pg_repuser=<user>
+      repuser_password='<password>'
+      pg_rep_slot=replica_1_slot
+      pg_database=apiwiz
+      allow_cidr=10.1.0.0/24
+   ```
 1. Complete the prerequisites referenced using this [documentation](https://sudheer-baraker.medium.com/ansible-passwordless-ssh-authentication-using-public-private-key-pairs-1bf91fff349e).
 1. Run the Ansible playbook:
-  ```text
-  cd {{path}}/apiwiz-db-automation-ansible/timescaledb
-     ansible-playbook -i inventory playbook.yml
-  ```
+   ```text
+   cd {{path}}/apiwiz-db-automation-ansible/timescaledb
+      ansible-playbook -i inventory playbook.yml
+   ```
 
 ## Deploy APIwiz on Kubernetes
 
@@ -292,17 +292,17 @@ REACT_BUILDER_CNAME= # Load balancer URL
 ### Configure kubectl to connect to your Kubernetes cluster
 
 1. Run the following command to check the current context:
-  ```text
-  kubectl config current-context
-  ```
+   ```text
+   kubectl config current-context
+   ```
 1. Run the following command to switch to your cluster's context:
-  ```text
-  kubectl config use-context my-cluster-name
-  ```
+   ```text
+   kubectl config use-context my-cluster-name
+   ```
 1. Run the following command to set the cluster:
-  ```text
-  kubectl config set-cluster my-cluster-name
-  ```
+   ```text
+   kubectl config set-cluster my-cluster-name
+   ```
 
 ### Create the namespace
 
@@ -313,34 +313,34 @@ Example:
 ### Deploy the APIwiz platform components
 
 1. Run the following command to deploy an application component, replacing `<app-name>` with the component's name:
-  ```text
-  kubectl -n apiwiz-system apply -f <app-name>-deploy.yaml
-  ```
+   ```text
+   kubectl -n apiwiz-system apply -f <app-name>-deploy.yaml
+   ```
 1. Run the following command to deploy the OPA server:
-  ```text
-  kubectl -n apiwiz-system apply -f opa-server-deploy.yaml
-  ```
+   ```text
+   kubectl -n apiwiz-system apply -f opa-server-deploy.yaml
+   ```
 1. Run the following command to deploy RabbitMQ:
-  ```text
-  kubectl -n apiwiz-system apply -f rabbitmq-deploy.yaml
-  ```
+   ```text
+   kubectl -n apiwiz-system apply -f rabbitmq-deploy.yaml
+   ```
 
 ## Install the APIwiz Developer Portal
 
 **Requirement:** Ensure your **kubectl** command is configured to connect to your APIwiz Kubernetes cluster, as described above.
 
 1. Run the following command to deploy the Developer Portal API:
-  ```text
-  kubectl -n apiwiz-system apply -f devportal-api-deploy.yaml
-  ```
+   ```text
+   kubectl -n apiwiz-system apply -f devportal-api-deploy.yaml
+   ```
 1. Run the following command to deploy the Developer Portal UI:
-  ```text
-  kubectl -n apiwiz-system apply -f devportal-ui-deploy.yaml
-  ```
+   ```text
+   kubectl -n apiwiz-system apply -f devportal-ui-deploy.yaml
+   ```
 1. Run the following command to deploy the API Catalog UI:
-  ```text
-  kubectl -n apiwiz-system apply -f apiwiz-api-catalog-ui-deploy.yaml
-  ```
+   ```text
+   kubectl -n apiwiz-system apply -f apiwiz-api-catalog-ui-deploy.yaml
+   ```
 
 ## Reference: Developer Portal components
 

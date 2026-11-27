@@ -158,13 +158,13 @@ To create a new example:
     - **Enabled**: Enter a URL to reference the example from an external source.
   - **Value**: Enter the actual example data in JSON, XML, or another supported format. For example:
 
-  ```text
-  {\
-  "customerId": "12345",\
-  "name": "John Doe",\
-  "email": "john.doe@example.com"\
-  }
-  ```
+   ```text
+   {\
+   "customerId": "12345",\
+   "name": "John Doe",\
+   "email": "john.doe@example.com"\
+   }
+   ```
 1. Select **Save**.
 
 ## Response headers

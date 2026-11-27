@@ -8,9 +8,9 @@ To disable the Apiwiz agent:
 
 1. Open the application's deployment manifest file.
 1. Locate the annotation that enables Apiwiz Java instrumentation:
-  ```text
-  apiwiz-java-instrumentation: apiwiz
-  ```
+   ```text
+   apiwiz-java-instrumentation: apiwiz
+   ```
 1. Remove the annotation.
 1. Apply or redeploy the updated manifest.
 

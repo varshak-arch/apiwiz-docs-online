@@ -29,13 +29,13 @@ The installation script supports an offline POC installation as long as you inst
 Disable SELinux on the node so that it doesn't block APIwiz services.
 
 1. Open the SELinux configuration file:
-  ```text
-  /etc/selinux/config
-  ```
+   ```text
+   /etc/selinux/config
+   ```
 1. Comment out the existing `SELINUX` line, or set it to the following value:
-  ```text
-  SELINUX=permissive
-  ```
+   ```text
+   SELINUX=permissive
+   ```
 1. Restart the server to apply the change.
 
 SELinux runs in permissive mode and no longer blocks APIwiz services.
@@ -61,9 +61,9 @@ Create a file at `/tmp/license.txt` and add the license key content. Contact the
 
 1. Upload the bootstrap script to `/tmp/bootstrap-v3.sh`.
 1. Give the script execute permission:
-  ```text
-  chmod +x /tmp/bootstrap-v3.sh
-  ```
+   ```text
+   chmod +x /tmp/bootstrap-v3.sh
+   ```
 
 ### Creating the configuration file
 
@@ -102,25 +102,25 @@ This command downloads all packages required to install APIwiz and creates the n
 Run the following commands in order.
 
 1. Install MongoDB:
-  ```text
-  /opt/apiwiz/scripts/bin/install.sh -p mongodb -f /opt/Configfile
-  ```
+   ```text
+   /opt/apiwiz/scripts/bin/install.sh -p mongodb -f /opt/Configfile
+   ```
 1. Install TimescaleDB. This command installs a PostgreSQL database with the TimescaleDB and `btree_gin` extensions:
-  ```text
-  /opt/apiwiz/scripts/bin/install.sh -p timescale-standalone -f /opt/Configfile
-  ```
+   ```text
+   /opt/apiwiz/scripts/bin/install.sh -p timescale-standalone -f /opt/Configfile
+   ```
 1. Install RabbitMQ. This command installs RabbitMQ with the management plugin enabled, and configures a user with the details from the configuration file. The management UI runs on port 15672:
-  ```text
-  /opt/apiwiz/scripts/bin/install.sh -p rabbitmq -f /opt/Configfile
-  ```
+   ```text
+   /opt/apiwiz/scripts/bin/install.sh -p rabbitmq -f /opt/Configfile
+   ```
 1. Install the APIwiz core components:
-  ```text
-  /opt/apiwiz/scripts/bin/install.sh -p apiwiz-poc-setup -f /opt/Configfile
-  ```
+   ```text
+   /opt/apiwiz/scripts/bin/install.sh -p apiwiz-poc-setup -f /opt/Configfile
+   ```
 1. Import the POC data:
-  ```text
-  /opt/apiwiz/scripts/bin/install.sh -p poc-data-setup -f /opt/Configfile
-  ```
+   ```text
+   /opt/apiwiz/scripts/bin/install.sh -p poc-data-setup -f /opt/Configfile
+   ```
 
 MongoDB, TimescaleDB, RabbitMQ, and the APIwiz core components are installed, and the POC data is loaded.
 

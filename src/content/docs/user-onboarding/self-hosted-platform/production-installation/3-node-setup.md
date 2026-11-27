@@ -36,22 +36,22 @@ On all 3 nodes:
 
 1. Upload the bootstrap script to `/tmp/bootstrap-v3.sh`.
 1. Give the script execute permission:
-  ```text
-  chmod +x /tmp/bootstrap-v3.sh
-  ```
+   ```text
+   chmod +x /tmp/bootstrap-v3.sh
+   ```
 
 ### Disabling SELinux
 
 Disable SELinux on all 3 nodes so that it doesn't block APIwiz services.
 
 1. Open the SELinux configuration file:
-  ```text
-  /etc/selinux/config
-  ```
+   ```text
+   /etc/selinux/config
+   ```
 1. Comment out the existing `SELINUX` line, or set it to the following value:
-  ```text
-  SELINUX=permissive
-  ```
+   ```text
+   SELINUX=permissive
+   ```
 1. Restart the server to apply the change.
 
 SELinux runs in permissive mode on all 3 nodes and no longer blocks APIwiz services.
@@ -122,13 +122,13 @@ MongoDB, TimescaleDB, and RabbitMQ are installed and running on Node 3.
 #### Installing the APIwiz core components on Node 1 and Node 2
 
 1. Log in to Node 1 and deploy the APIwiz core applications:
-  ```text
-  /opt/apiwiz/scripts/bin/install.sh -p 3node-1-setup -f /opt/Configfile
-  ```
+   ```text
+   /opt/apiwiz/scripts/bin/install.sh -p 3node-1-setup -f /opt/Configfile
+   ```
 1. Log in to Node 2 and deploy the APIwiz core applications:
-  ```text
-  /opt/apiwiz/scripts/bin/install.sh -p 3node-2-setup -f /opt/Configfile
-  ```
+   ```text
+   /opt/apiwiz/scripts/bin/install.sh -p 3node-2-setup -f /opt/Configfile
+   ```
 
 The APIwiz core components are running on Node 1 and Node 2.
 
@@ -176,24 +176,24 @@ Download the APIwiz binaries into the `/opt/apiwiz/packages` folder on each serv
 **Prerequisites**: The APIwiz binaries are downloaded to `/opt/apiwiz/packages` on the server.
 
 1. Extract the binaries:
-  ```text
-  unzip -o /opt/apiwiz/packages/packages.zip -d /opt/apiwiz/packages/Apps
-  ```
+   ```text
+   unzip -o /opt/apiwiz/packages/packages.zip -d /opt/apiwiz/packages/Apps
+   ```
 1. Move the install script to the scripts folder, and give it execute permission:
-  ```text
-  mv /opt/apiwiz/packages/Apps/install.sh /opt/apiwiz/scripts/bin/install.sh
-  chmod +x /opt/apiwiz/scripts/bin/install.sh
-  ```
+   ```text
+   mv /opt/apiwiz/packages/Apps/install.sh /opt/apiwiz/scripts/bin/install.sh
+   chmod +x /opt/apiwiz/scripts/bin/install.sh
+   ```
 1. Copy the resources folder, and move the remaining scripts to the scripts folder:
-  ```text
-  cp -rvf /opt/apiwiz/packages/Apps/resources /opt/apiwiz/scripts/bin/
-  mv /opt/apiwiz/packages/Apps/*.sh /opt/apiwiz/scripts/bin/
-  chmod +x /opt/apiwiz/scripts/bin/*.sh
-  ```
+   ```text
+   cp -rvf /opt/apiwiz/packages/Apps/resources /opt/apiwiz/scripts/bin/
+   mv /opt/apiwiz/packages/Apps/*.sh /opt/apiwiz/scripts/bin/
+   chmod +x /opt/apiwiz/scripts/bin/*.sh
+   ```
 1. After you complete these steps on all 3 servers, delete the package archive:
-  ```text
-  rm -rf /opt/apiwiz/packages/packages.zip
-  ```
+   ```text
+   rm -rf /opt/apiwiz/packages/packages.zip
+   ```
 
 The APIwiz binaries are extracted and in place on all 3 servers. You can now proceed with installing the platform, as described in [Installing the APIwiz platform](#installing-the-apiwiz-platform).
 

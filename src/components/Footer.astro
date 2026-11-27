@@ -23,7 +23,7 @@ const issueUrl = `https://github.com/varshak-arch/apiwiz-docs-online/issues/new?
     </page-feedback>
   )
 }
-<Default />
+{!isSplash && <Default />}
 
 <dialog class="lightbox" aria-label="Enlarged image">
   <button type="button" class="lightbox-close" aria-label="Close">✕</button>

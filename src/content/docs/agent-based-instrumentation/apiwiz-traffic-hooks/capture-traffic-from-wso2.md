@@ -28,13 +28,13 @@ To copy the agent JAR file to the WSO2 server, do the following:
 1. Copy the JAR file to the WSO2 library directory:
   **For VM/Server setup:**
 
-  ```bash
-  cp apiwiz-wso2-observablity-javaagent-1.1-RELEASE.jar /opt/wso2am-4.3.0/lib/
-  ```
+   ```bash
+   cp apiwiz-wso2-observablity-javaagent-1.1-RELEASE.jar /opt/wso2am-4.3.0/lib/
+   ```
 1. Note the full absolute path where you placed the JAR file. For example:
-  ```text
-  /home/wso2carbon/wso2am-4.3.0/lib/apiwiz-wso2-observablity-javaagent-1.1-RELEASE.jar
-  ```
+   ```text
+   /home/wso2carbon/wso2am-4.3.0/lib/apiwiz-wso2-observablity-javaagent-1.1-RELEASE.jar
+   ```
 
 ### Step 2: Edit the WSO2 startup script
 

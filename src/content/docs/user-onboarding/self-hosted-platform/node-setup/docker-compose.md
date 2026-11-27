@@ -55,17 +55,17 @@ Grant the user with UID 1000 permission to run Docker commands without `sudo`.
 Do the following:
 
 1. Identify the user with UID 1000:
-  ```text
-  grep 1000 /etc/passwd
-  ```
+   ```text
+   grep 1000 /etc/passwd
+   ```
 1. Switch to the user with UID 1000 and add the user to the `docker` group:
-  ```text
-  sudo usermod -aG docker $USER
-  ```
+   ```text
+   sudo usermod -aG docker $USER
+   ```
 1. Log out of the VM, log back in, and verify that `docker` runs without `sudo`:
-  ```text
-  docker ps
-  ```
+   ```text
+   docker ps
+   ```
 
 The user with UID 1000 can run Docker commands without `sudo`.
 
@@ -78,36 +78,36 @@ This task installs the AWS Command Line Interface \(CLI\) on macOS or Linux.
 **macOS**
 
 1. Download the AWS CLI package:
-  ```text
-  curl "https://awscli.amazonaws.com/AWSCLIV2.pkg" -o "AWSCLIV2.pkg"
-  ```
+   ```text
+   curl "https://awscli.amazonaws.com/AWSCLIV2.pkg" -o "AWSCLIV2.pkg"
+   ```
 1. Run the installer. This command installs or upgrades the AWS CLI on macOS. If the AWS CLI is already installed, this command upgrades it to the version in the `AWSCLIV2.pkg` file:
-  ```text
-  sudo installer -pkg AWSCLIV2.pkg -target /
-  ```
+   ```text
+   sudo installer -pkg AWSCLIV2.pkg -target /
+   ```
 1. Verify the installation:
-  ```text
-  aws --version
-  ```
+   ```text
+   aws --version
+   ```
 
 **Linux**
 
 1. Download and run the installation file:
-  ```text
-  curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && unzip awscliv2.zip && sudo ./aws/install
-  ```
+   ```text
+   curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && unzip awscliv2.zip && sudo ./aws/install
+   ```
 1. Verify the installation:
-  ```text
-  aws --version
-  ```
+   ```text
+   aws --version
+   ```
 1. To run AWS CLI commands as the root user, create a symbolic link:
-  ```text
-  sudo ln -s /usr/local/bin/aws /usr/local/sbin
-  ```
+   ```text
+   sudo ln -s /usr/local/bin/aws /usr/local/sbin
+   ```
 1. Verify the AWS CLI command as the root user:
-  ```text
-  aws --version
-  ```
+   ```text
+   aws --version
+   ```
 
 ## Installing APIwiz
 
@@ -130,9 +130,9 @@ APIwiz provides a bootstrap script that verifies all prerequisites before the in
 
 1. Upload the bootstrap script to `/tmp/bootstrap-docker-compose-v3.sh`.
 1. Give the script execute permission:
-  ```text
-  chmod +x /tmp/bootstrap-docker-compose-v3.sh
-  ```
+   ```text
+   chmod +x /tmp/bootstrap-docker-compose-v3.sh
+   ```
 
 ### Uploading the APIwiz package
 
@@ -190,17 +190,17 @@ A plan is either `team` or `enterprise`. The default workspace password is `Chan
 Run the following commands in order:
 
 1. Start the APIwiz workspace:
-  ```text
-  ./docker-compose-poc-setup.sh -f Configfile -p poc-node-setup
-  ```
+   ```text
+   ./docker-compose-poc-setup.sh -f Configfile -p poc-node-setup
+   ```
 1. Insert the POC data:
-  ```text
-  ./docker-compose-poc-setup.sh -f Configfile -p poc-data-setup
-  ```
+   ```text
+   ./docker-compose-poc-setup.sh -f Configfile -p poc-data-setup
+   ```
 1. Start the developer portal:
-  ```text
-  ./docker-compose-poc-setup.sh -f Configfile -p devportal
-  ```
+   ```text
+   ./docker-compose-poc-setup.sh -f Configfile -p devportal
+   ```
 
 The APIwiz workspace, POC data, and developer portal are running.
 
@@ -282,48 +282,48 @@ Follow these firewall rules to allow access to the additional Kong instance.
 Create default virtual hosts for the API Builder agent and the API sandbox.
 
 1. Create a default virtual host for the `apibuilder-agent`:
-  ```text
-  curl --location 'http://<WORKSPACENAME>.<DOMAIN>/itorix/v1/api-builder/virtual-host/default' \
-  --header 'x-apikey: <X_APIKEY>' \
-  --header 'x-tenant: <WORKSPACENAME>' \
-  --header 'Content-Type: application/json' \
-  --data '{
-      "host": "apibuilder.<DOMAIN>",
-      "scheme": "HTTP",
-      "port": 7080
-  }'
-  ```
+   ```text
+   curl --location 'http://<WORKSPACENAME>.<DOMAIN>/itorix/v1/api-builder/virtual-host/default' \
+   --header 'x-apikey: <X_APIKEY>' \
+   --header 'x-tenant: <WORKSPACENAME>' \
+   --header 'Content-Type: application/json' \
+   --data '{
+       "host": "apibuilder.<DOMAIN>",
+       "scheme": "HTTP",
+       "port": 7080
+   }'
+   ```
 1. Create a default virtual host for the API sandbox:
-  ```text
-  curl --location 'http://<WORKSPACENAME>.<DOMAIN>/itorix/v1/api-sandbox/virtual-host/default' \
-  --header 'x-apikey: <X_APIKEY>' \
-  --header 'x-tenant: <WORKSPACENAME>' \
-  --header 'Content-Type: application/json' \
-  --data '{
-      "host": "apisandbox.<DOMAIN>",
-      "scheme": "HTTP",
-      "port": 7080
-  }'
-  ```
+   ```text
+   curl --location 'http://<WORKSPACENAME>.<DOMAIN>/itorix/v1/api-sandbox/virtual-host/default' \
+   --header 'x-apikey: <X_APIKEY>' \
+   --header 'x-tenant: <WORKSPACENAME>' \
+   --header 'Content-Type: application/json' \
+   --data '{
+       "host": "apisandbox.<DOMAIN>",
+       "scheme": "HTTP",
+       "port": 7080
+   }'
+   ```
 
 ## Troubleshooting
 
 ### Checking component logs
 
 1. List running Docker containers:
-  ```text
-  docker ps -a   ##Command to list docker containers
-  ```
+   ```text
+   docker ps -a   ##Command to list docker containers
+   ```
 1. View logs for a specific container:
-  ```text
-  docker logs <container-id/container-name>
-  ```
+   ```text
+   docker logs <container-id/container-name>
+   ```
 
   Alternatively, for backend applications:
 
-  ```text
-  tail -f logs/<service_name>/*   ##Only for backend applications
-  ```
+   ```text
+   tail -f logs/<service_name>/*   ##Only for backend applications
+   ```
 
 ### Stopping Docker Compose services
 

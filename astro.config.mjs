@@ -14,11 +14,14 @@ export default defineConfig({
       logo: { src: './src/assets/apiwiz-mark.png', alt: 'APIwiz' },
       favicon: '/favicon.png',
       head: [{ tag: 'link', attrs: { rel: 'apple-touch-icon', href: '/apple-touch-icon.png' } }],
+      expressiveCode: {
+        styleOverrides: { borderRadius: '0.75rem', codeFontSize: '0.85rem', frames: { shadowColor: 'transparent' } },
+      },
       customCss: ['./src/styles/custom.css'],
       lastUpdated: true,
       pagination: true,
       credits: false,
-      tableOfContents: { minHeadingLevel: 2, maxHeadingLevel: 3 },
+      tableOfContents: { minHeadingLevel: 2, maxHeadingLevel: 4 },
       // Point this at the new repo once it exists so every page gets an "Edit page" link.
       editLink: { baseUrl: 'https://github.com/varshak-arch/apiwiz-docs-online/edit/main/' },
       social: [

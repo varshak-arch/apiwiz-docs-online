@@ -65,21 +65,21 @@ Build a Kong image that includes the plugins, and redeploy Kong with it.
 Do the following:
 
 1. Create a Dockerfile. Replace the Kong image tag with your approved version:
-  ```dockerfile
-  FROM kong:3.9.3
-  COPY kong/plugins/ /opt/kong/plugins/
-  ENV KONG_LUA_PACKAGE_PATH="/opt/?.lua;/opt/?/init.lua;;"
-  ENV KONG_PLUGINS="bundled,kvm,apiwiz"
-  ```
+   ```dockerfile
+   FROM kong:3.9.3
+   COPY kong/plugins/ /opt/kong/plugins/
+   ENV KONG_LUA_PACKAGE_PATH="/opt/?.lua;/opt/?/init.lua;;"
+   ENV KONG_PLUGINS="bundled,kvm,apiwiz"
+   ```
 1. Build the image:
-  ```shell
-  docker build -t kong-apiwiz:3.9.3-v1 .
-  ```
+   ```shell
+   docker build -t kong-apiwiz:3.9.3-v1 .
+   ```
 1. In your Docker Compose file, update the Kong service image to `kong-apiwiz:3.9.3-v1`.
 1. Recreate the Kong service:
-  ```shell
-  docker compose up -d --force-recreate kong
-  ```
+   ```shell
+   docker compose up -d --force-recreate kong
+   ```
 
 Kong runs with the kvm and apiwiz plugins loaded.
 
@@ -94,14 +94,14 @@ Do the following:
 1. In your Docker Compose file, add the volume and environment settings to the Kong service. Retain your existing ports, database, networks, and other settings:
 
 1. Recreate the Kong service:
-  ```shell
-  docker compose up -d --force-recreate kong
-  ```
+   ```shell
+   docker compose up -d --force-recreate kong
+   ```
 1. Check the Kong logs, and verify that the enabled plugin list includes `kvm` and `apiwiz`. Adjust the container name and Admin API host for your deployment:
-  ```shell
-  docker compose logs --tail=100 kong
-  curl -sS http://<KONG_ADMIN_HOST>:8001/plugins/enabled
-  ```
+   ```shell
+   docker compose logs --tail=100 kong
+   curl -sS http://<KONG_ADMIN_HOST>:8001/plugins/enabled
+   ```
 
 Kong runs with the kvm and apiwiz plugins loaded.
 
@@ -114,25 +114,25 @@ Supply the plugin code to every Kong Gateway data plane pod, configure Kong to l
 Do the following:
 
 1. Create a ConfigMap for each plugin:
-  ```shell
-  kubectl -n <kong-namespace> create configmap kong-plugin-kvm \
-    --from-file=handler.lua=./kong/plugins/kvm/handler.lua \
-    --from-file=schema.lua=./kong/plugins/kvm/schema.lua
+   ```shell
+   kubectl -n <kong-namespace> create configmap kong-plugin-kvm \
+     --from-file=handler.lua=./kong/plugins/kvm/handler.lua \
+     --from-file=schema.lua=./kong/plugins/kvm/schema.lua
 
-  kubectl -n <kong-namespace> create configmap kong-plugin-apiwiz \
-    --from-file=handler.lua=./kong/plugins/apiwiz/handler.lua \
-    --from-file=schema.lua=./kong/plugins/apiwiz/schema.lua
-  ```
+   kubectl -n <kong-namespace> create configmap kong-plugin-apiwiz \
+     --from-file=handler.lua=./kong/plugins/apiwiz/handler.lua \
+     --from-file=schema.lua=./kong/plugins/apiwiz/schema.lua
+   ```
 
   For larger packages or plugins with additional files, use a custom image instead. This two-file ConfigMap example doesn't cover additional dependencies.
 1. Merge the following fragment into the existing Kong container spec and pod spec. Replace `proxy` with your Kong container name, and preserve all existing environment variables, sidecars, volumes, and `KONG_PLUGINS` entries:
   This is a merge fragment, not a complete Deployment manifest. If you manage Kong through Helm or a controller, update the chart or managed resource instead of editing the Deployment manually, because manual edits are overwritten.
 1. Restart the Deployment, wait for the rollout, and check the logs:
-  ```shell
-  kubectl -n <kong-namespace> rollout restart deployment/<kong-deployment>
-  kubectl -n <kong-namespace> rollout status deployment/<kong-deployment>
-  kubectl -n <kong-namespace> logs deployment/<kong-deployment> --tail=100
-  ```
+   ```shell
+   kubectl -n <kong-namespace> rollout restart deployment/<kong-deployment>
+   kubectl -n <kong-namespace> rollout status deployment/<kong-deployment>
+   kubectl -n <kong-namespace> logs deployment/<kong-deployment> --tail=100
+   ```
 1. Verify that each pod is ready, that the Kong startup logs contain no Lua module or plugin schema errors, and that the Kong enabled plugin list includes `kvm` and `apiwiz`.
 
 Every Kong data plane pod runs with the kvm and apiwiz plugins loaded.

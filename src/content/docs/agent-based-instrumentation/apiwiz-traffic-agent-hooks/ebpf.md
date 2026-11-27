@@ -94,9 +94,9 @@ The tracer package supports the following Windows Server versions:
 To start the Windows tracer, do the following:
 
 1. Navigate to the tracer installation directory. For example:
-  ```text
-  C:\tools\apiwiz-http-tracer
-  ```
+   ```text
+   C:\tools\apiwiz-http-tracer
+   ```
 
 ### Stop the tracer
 

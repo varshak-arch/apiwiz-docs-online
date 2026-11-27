@@ -1,0 +1,740 @@
+---
+// Landing page: hero with search, platform stats, the API lifecycle map,
+// category cards and a three-step quick start. All counts and links come from
+// the content folders, so the page stays accurate as docs are added.
+import fs from 'node:fs';
+import path from 'node:path';
+import { Icon } from '@astrojs/starlight/components';
+import { nav, sectionGroups, firstPage, pageCount } from '../../scripts/sidebar.mjs';
+
+const sections = nav.sections.map((s: any) => {
+  const groups = sectionGroups(s.id);
+  return {
+    ...s,
+    href: `/${s.id}/`,
+    pages: groups.reduce((n, g) => n + pageCount(g), 0),
+    links: groups.slice(0, 4).map((g) => ({ label: g.label, href: `/${firstPage(g)}/` })),
+    more: Math.max(0, groups.length - 4),
+    modules: groups.map((g) => ({ label: g.label, href: `/${firstPage(g)}/` })),
+  };
+});
+const byId = Object.fromEntries(sections.map((s) => [s.id, s]));
+const totalPages = sections.reduce((n, s) => n + s.pages, 0);
+const totalModules = sections.reduce((n, s) => n + s.modules.length, 0);
+const imgDir = path.resolve('src/assets/images');
+let screenshots = 0;
+const walk = (d: string) => {
+  for (const e of fs.readdirSync(d, { withFileTypes: true })) {
+    if (e.isDirectory()) walk(path.join(d, e.name));
+    else if (/\.(webp|png|jpe?g)$/.test(e.name)) screenshots++;
+  }
+};
+if (fs.existsSync(imgDir)) walk(imgDir);
+
+// The API lifecycle, left to right. Each stage is a docs category.
+const stages = [
+  { id: 'plan-and-design', verb: 'Design', note: 'Spec-first APIs, linted against your rules' },
+  { id: 'federated-gateways', verb: 'Deploy', note: 'Any gateway, managed from one place' },
+  { id: 'agent-based-instrumentation', verb: 'Capture', note: 'Traffic hooks stream every call' },
+  { id: 'observability-and-monitoring', verb: 'Observe', note: 'Logs, traces, metrics and monitors' },
+  { id: 'security-and-compliance', verb: 'Secure', note: 'Live traffic checked against the spec' },
+  { id: 'marketplace-and-monetization', verb: 'Monetize', note: 'Publish, package and bill' },
+].map((st, i) => ({ ...st, n: i + 1, s: byId[st.id] }));
+const foundation = ['user-onboarding', 'configurations-and-settings', 'utilities'].map((id) => byId[id]);
+
+const popular = [
+  { label: 'Introduction', href: '/user-onboarding/get-started-with-apiwiz/introduction/' },
+  { label: 'OAS Design Studio', href: '/plan-and-design/api-design/oas/overview/' },
+  { label: 'API Linting', href: `/${firstPage(sectionGroups('plan-and-design')[1])}/` },
+  { label: 'Transaction logs', href: `/${firstPage(sectionGroups('observability-and-monitoring')[0])}/` },
+  { label: 'Kubernetes install', href: '/user-onboarding/self-hosted-platform/production-installation/kubernetes-installation/' },
+  { label: 'Traffic hooks', href: '/agent-based-instrumentation/apiwiz-traffic-hooks/overview/' },
+];
+
+const steps = [
+  { n: '01', title: 'Create your workspace', text: 'Sign up on the vendor-managed platform, or install APIwiz in your own cloud.', href: '/user-onboarding/vendor-managed-platform/sign-up/', cta: 'Sign up' },
+  { n: '02', title: 'Design your first API', text: 'Create or import an OpenAPI spec in Design Studio and lint it against your standards.', href: '/plan-and-design/api-design/oas/creating-a-new-oas/', cta: 'Create an OAS' },
+  { n: '03', title: 'See live traffic', text: 'Add a traffic hook to your service and watch calls arrive in transaction logs.', href: '/agent-based-instrumentation/apiwiz-traffic-hooks/overview/', cta: 'Capture traffic' },
+];
+---
+
+<div class="home not-content">
+  <section class="hero">
+    <div class="hero-bg" aria-hidden="true">
+      <div class="grid"></div>
+      <div class="glow g1"></div>
+      <div class="glow g2"></div>
+      <div class="glow g3"></div>
+    </div>
+    <p class="eyebrow"><span class="dot"></span>APIwiz · Platform documentation</p>
+    <h1>
+      Every API, one platform.<br />
+      <span class="grad">From design to dollars.</span>
+    </h1>
+    <p class="lede">
+      Guides for the whole API lifecycle on APIwiz: design and lint specs, federate your gateways, watch live traffic,
+      keep it secure and compliant, then publish and monetize.
+    </p>
+    <button type="button" class="big-search" data-open-search>
+      <Icon name="magnifier" size="1.15rem" />
+      <span>Search {totalPages} pages of docs</span>
+      <kbd data-kbd>Ctrl K</kbd>
+    </button>
+    <div class="chips">
+      <span class="chips-label">Popular:</span>
+      {popular.map((p) => <a class="chip" href={p.href}>{p.label}</a>)}
+    </div>
+    <dl class="stats">
+      <div><dt>{totalPages}</dt><dd>pages</dd></div>
+      <div><dt>{nav.sections.length}</dt><dd>categories</dd></div>
+      <div><dt>{totalModules}</dt><dd>product modules</dd></div>
+      <div><dt>{screenshots}</dt><dd>annotated screenshots</dd></div>
+    </dl>
+  </section>
+
+  <section class="block">
+    <p class="kicker">How APIwiz fits together</p>
+    <h2>One lifecycle, every gateway</h2>
+    <p class="sub">An API moves left to right through APIwiz. Hover a stage to see its modules, or click to open its docs.</p>
+    <div class="lifecycle">
+      <div class="flow" aria-hidden="true"><span></span></div>
+      <ol class="stages">
+        {
+          stages.map((st) => (
+            <li style={`--c:${st.s.color}`}>
+              <a class="stage" href={st.s.href}>
+                <span class="n">{String(st.n).padStart(2, '0')}</span>
+                <span class="stage-icon"><Icon name={st.s.icon} size="1.1rem" /></span>
+                <span class="verb">{st.verb}</span>
+                <span class="stage-title">{st.s.label}</span>
+                <span class="note">{st.note}</span>
+                <span class="mods">
+                  {st.s.modules.slice(0, 4).map((m: any) => <span class="mod">{m.label}</span>)}
+                </span>
+              </a>
+            </li>
+          ))
+        }
+      </ol>
+      <div class="foundation">
+        <span class="foundation-label">Across the platform</span>
+        {
+          foundation.map((s) => (
+            <a href={s.href} style={`--c:${s.color}`}>
+              <Icon name={s.icon} size="0.95rem" />
+              {s.label}
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <p class="kicker">Browse the docs</p>
+    <h2>Nine categories, one place to look</h2>
+    <p class="sub">Every module is documented the same way: overview, getting started, quickstart, then the details.</p>
+    <div class="cats">
+      {
+        sections.map((s) => (
+          <article class="cat" style={`--c:${s.color}`}>
+            <header>
+              <span class="badge">{s.short}</span>
+              <span class="cat-icon"><Icon name={s.icon} size="1.1rem" /></span>
+            </header>
+            <h3><a href={s.href}>{s.label}</a></h3>
+            <p>{s.description}</p>
+            <ul>
+              {s.links.map((l: any) => (
+                <li>
+                  <a href={l.href}>
+                    {l.label}
+                    <span aria-hidden="true">→</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+            <footer>
+              <span>{s.pages} pages</span>
+              {s.more > 0 && <a href={s.href}>+{s.more} more modules</a>}
+            </footer>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="block quick">
+    <p class="kicker">Quick start</p>
+    <h2>From zero to live traffic in three steps</h2>
+    <ol class="steps">
+      {
+        steps.map((s) => (
+          <li>
+            <span class="step-n">{s.n}</span>
+            <h3>{s.title}</h3>
+            <p>{s.text}</p>
+            <a href={s.href}>
+              {s.cta} <span aria-hidden="true">→</span>
+            </a>
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+
+  <section class="help">
+    <div>
+      <h2>Can't find what you need?</h2>
+      <p>Search every page with <kbd>Ctrl K</kbd>, or ask the APIwiz team.</p>
+    </div>
+    <div class="help-actions">
+      <button type="button" class="btn ghost" data-open-search>Search the docs</button>
+      <a class="btn" href="mailto:support@apiwiz.io">Contact support</a>
+    </div>
+  </section>
+</div>
+
+<script>
+  const isMac = /Mac|iPhone|iPad/.test(navigator.platform);
+  document.querySelectorAll('[data-kbd], .help kbd').forEach((k) => (k.textContent = isMac ? '⌘ K' : 'Ctrl K'));
+  document.querySelectorAll('[data-open-search]').forEach((b) =>
+    b.addEventListener('click', () => document.querySelector<HTMLButtonElement>('button[data-open-modal]')?.click())
+  );
+</script>
+
+<style>
+  .home {
+    --mono: var(--sl-font-mono);
+    width: min(76rem, 100%);
+    margin-inline: auto;
+  }
+  .home h1,
+  .home h2,
+  .home h3 {
+    margin: 0;
+    color: var(--sl-color-white);
+  }
+  .home a {
+    text-decoration: none;
+  }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    position: relative;
+    isolation: isolate;
+    padding: clamp(2.5rem, 6vw, 5rem) clamp(1.25rem, 4vw, 3.5rem) 3rem;
+    margin-top: 1rem;
+    border: 1px solid var(--sl-color-hairline);
+    border-radius: 1.5rem;
+    overflow: hidden;
+    background: var(--apiwiz-hero-bg);
+  }
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+  }
+  .grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--apiwiz-grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--apiwiz-grid) 1px, transparent 1px);
+    background-size: 44px 44px;
+    mask-image: radial-gradient(ellipse 80% 70% at 70% 20%, #000 30%, transparent 75%);
+  }
+  .glow {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(70px);
+    opacity: var(--apiwiz-glow);
+    animation: drift 18s ease-in-out infinite alternate;
+  }
+  .g1 { width: 26rem; height: 26rem; right: -6rem; top: -8rem; background: #1fe0cf; }
+  .g2 { width: 22rem; height: 22rem; right: 14rem; top: 2rem; background: #7a12d8; animation-delay: -6s; }
+  .g3 { width: 18rem; height: 18rem; right: 2rem; bottom: -10rem; background: #0a7cff; animation-delay: -12s; }
+  @keyframes drift {
+    to { transform: translate3d(-2.5rem, 1.5rem, 0) scale(1.08); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .glow { animation: none; }
+  }
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    margin: 0 0 1.4rem;
+    padding: 0.35rem 0.8rem;
+    border: 1px solid color-mix(in srgb, var(--sl-color-accent) 35%, transparent);
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--sl-color-accent) 9%, transparent);
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--sl-color-accent-high);
+  }
+  :global([data-theme='light']) .eyebrow { color: var(--sl-color-accent); }
+  .dot {
+    width: 0.45rem;
+    height: 0.45rem;
+    border-radius: 50%;
+    background: #1fe0cf;
+    box-shadow: 0 0 0 0 #1fe0cf;
+    animation: pulse 2.4s infinite;
+  }
+  @keyframes pulse {
+    70% { box-shadow: 0 0 0 0.5rem transparent; }
+    100% { box-shadow: 0 0 0 0 transparent; }
+  }
+  .hero h1 {
+    max-width: 18ch;
+    font-size: clamp(2.4rem, 6vw, 4.4rem);
+    line-height: 1.04;
+    letter-spacing: -0.035em;
+    font-weight: 800;
+  }
+  .grad {
+    background: linear-gradient(90deg, #d400f5, #7a12d8 28%, #0a7cff 62%, #1fe0cf);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .lede {
+    max-width: 40rem;
+    margin: 1.4rem 0 2rem;
+    font-size: clamp(1.02rem, 1.6vw, 1.2rem);
+    line-height: 1.6;
+    color: var(--sl-color-gray-2);
+  }
+  .big-search {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    width: min(36rem, 100%);
+    padding: 1rem 1.1rem;
+    border: 1px solid var(--sl-color-hairline-shade);
+    border-radius: 0.9rem;
+    background: var(--apiwiz-card-bg);
+    box-shadow: 0 18px 40px -24px rgb(10 40 120 / 0.45);
+    color: var(--sl-color-gray-3);
+    font: inherit;
+    font-size: var(--sl-text-base);
+    text-align: start;
+    cursor: pointer;
+    transition: border-color 140ms ease, box-shadow 140ms ease;
+  }
+  .big-search:hover {
+    border-color: var(--sl-color-accent);
+    box-shadow: 0 18px 44px -20px color-mix(in srgb, var(--sl-color-accent) 70%, transparent);
+  }
+  .big-search span { flex: 1; }
+  kbd {
+    padding: 0.15rem 0.45rem;
+    border: 1px solid var(--sl-color-hairline-shade);
+    border-radius: 0.35rem;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--sl-color-gray-3);
+    background: var(--sl-color-gray-6);
+  }
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1.1rem;
+  }
+  .chips-label {
+    font-size: var(--sl-text-sm);
+    color: var(--sl-color-gray-3);
+  }
+  .chip {
+    padding: 0.3rem 0.8rem;
+    border: 1px solid var(--sl-color-hairline-shade);
+    border-radius: 999px;
+    background: var(--apiwiz-card-bg);
+    font-size: var(--sl-text-sm);
+    color: var(--sl-color-gray-1);
+    transition: border-color 120ms ease, color 120ms ease;
+  }
+  .chip:hover {
+    border-color: var(--sl-color-accent);
+    color: var(--sl-color-accent);
+  }
+  .stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem 3rem;
+    margin: 2.75rem 0 0;
+  }
+  .stats div { display: flex; flex-direction: column; }
+  .stats dt {
+    font-size: 2rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: var(--sl-color-white);
+  }
+  .stats dd {
+    margin: 0;
+    font-size: var(--sl-text-sm);
+    color: var(--sl-color-gray-3);
+  }
+
+  /* ---------- Shared section heading ---------- */
+  .block { margin-top: 5rem; }
+  .kicker {
+    margin: 0 0 0.6rem;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--sl-color-accent);
+  }
+  .block h2 {
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    letter-spacing: -0.025em;
+    font-weight: 750;
+  }
+  .sub {
+    max-width: 42rem;
+    margin: 0.6rem 0 2rem;
+    color: var(--sl-color-gray-2);
+  }
+
+  /* ---------- Lifecycle ---------- */
+  .lifecycle {
+    position: relative;
+    padding: 1.5rem;
+    border: 1px solid var(--sl-color-hairline);
+    border-radius: 1.25rem;
+    background: var(--apiwiz-panel-bg);
+  }
+  .flow {
+    position: absolute;
+    left: 2.5rem;
+    right: 2.5rem;
+    top: 3.4rem;
+    height: 2px;
+    background: var(--sl-color-hairline-shade);
+    overflow: hidden;
+  }
+  .flow span {
+    position: absolute;
+    inset: 0;
+    width: 30%;
+    background: linear-gradient(90deg, transparent, #0a7cff, #1fe0cf, transparent);
+    animation: flow 3.5s linear infinite;
+  }
+  @keyframes flow {
+    from { transform: translateX(-100%); }
+    to { transform: translateX(340%); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .flow span { animation: none; }
+  }
+  .stages {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 0.75rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .stage {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    height: 100%;
+    padding: 1rem 0.9rem;
+    border: 1px solid var(--sl-color-hairline-shade);
+    border-radius: 0.9rem;
+    background: var(--apiwiz-card-bg);
+    color: inherit;
+    transition: transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+  }
+  .stage:hover {
+    transform: translateY(-4px);
+    border-color: var(--c);
+    box-shadow: 0 16px 36px -22px var(--c);
+  }
+  .n {
+    align-self: flex-end;
+    margin-bottom: -1.4rem;
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--sl-color-gray-4);
+  }
+  .stage-icon,
+  .cat-icon {
+    display: grid;
+    place-items: center;
+    width: 2.1rem;
+    height: 2.1rem;
+    border-radius: 0.6rem;
+    color: var(--c);
+    background: color-mix(in srgb, var(--c) 13%, transparent);
+  }
+  .verb {
+    margin-top: 0.5rem;
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--c);
+  }
+  .stage-title {
+    font-weight: 650;
+    font-size: var(--sl-text-sm);
+    line-height: 1.3;
+    color: var(--sl-color-white);
+  }
+  .note {
+    font-size: 0.78rem;
+    line-height: 1.45;
+    color: var(--sl-color-gray-3);
+  }
+  .mods {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+    margin-top: 0.4rem;
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: max-height 220ms ease, opacity 220ms ease;
+  }
+  .stage:hover .mods,
+  .stage:focus-visible .mods {
+    max-height: 8rem;
+    opacity: 1;
+  }
+  .mod {
+    padding: 0.1rem 0.4rem;
+    border: 1px solid var(--sl-color-hairline-shade);
+    border-radius: 0.3rem;
+    font-family: var(--mono);
+    font-size: 0.66rem;
+    color: var(--sl-color-gray-2);
+    background: var(--sl-color-gray-6);
+  }
+  .foundation {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.6rem;
+    margin-top: 1rem;
+    padding: 0.8rem 1rem;
+    border: 1px dashed var(--sl-color-hairline-shade);
+    border-radius: 0.8rem;
+  }
+  .foundation-label {
+    margin-inline-end: 0.5rem;
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--sl-color-gray-3);
+  }
+  .foundation a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.35rem 0.75rem;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--c) 11%, transparent);
+    color: var(--sl-color-gray-1);
+    font-size: var(--sl-text-sm);
+    font-weight: 500;
+  }
+  .foundation a :global(svg) { color: var(--c); }
+  .foundation a:hover { background: color-mix(in srgb, var(--c) 20%, transparent); }
+
+  /* ---------- Categories ---------- */
+  .cats {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(21rem, 1fr));
+    gap: 1rem;
+  }
+  .cat {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 1.3rem 1.3rem 1rem;
+    border: 1px solid var(--sl-color-hairline-shade);
+    border-radius: 1rem;
+    background: var(--apiwiz-card-bg);
+    overflow: hidden;
+    transition: border-color 160ms ease, box-shadow 160ms ease;
+  }
+  .cat::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto;
+    height: 3px;
+    background: var(--c);
+    opacity: 0.85;
+  }
+  .cat:hover {
+    border-color: color-mix(in srgb, var(--c) 60%, transparent);
+    box-shadow: 0 18px 40px -28px var(--c);
+  }
+  .cat header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .badge {
+    padding: 0.18rem 0.5rem;
+    border-radius: 0.35rem;
+    font-family: var(--mono);
+    font-size: 0.66rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--c);
+    background: color-mix(in srgb, var(--c) 13%, transparent);
+  }
+  .cat h3 {
+    margin-top: 0.9rem;
+    font-size: 1.15rem;
+    letter-spacing: -0.01em;
+  }
+  .cat h3 a { color: inherit; }
+  .cat h3 a:hover { color: var(--c); }
+  .cat > p {
+    margin: 0.4rem 0 0.9rem;
+    font-size: var(--sl-text-sm);
+    line-height: 1.55;
+    color: var(--sl-color-gray-2);
+  }
+  .cat ul {
+    margin: 0 0 auto;
+    padding: 0;
+    list-style: none;
+  }
+  .cat li a {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.55rem 0;
+    border-top: 1px solid var(--sl-color-hairline);
+    font-size: var(--sl-text-sm);
+    color: var(--sl-color-gray-1);
+  }
+  .cat li a span {
+    color: var(--sl-color-gray-4);
+    transition: transform 140ms ease, color 140ms ease;
+  }
+  .cat li a:hover { color: var(--c); }
+  .cat li a:hover span { color: var(--c); transform: translateX(3px); }
+  .cat footer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0.7rem;
+    padding-top: 0.7rem;
+    border-top: 1px solid var(--sl-color-hairline);
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--sl-color-gray-3);
+  }
+  .cat footer a { color: var(--c); }
+
+  /* ---------- Quick start ---------- */
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+    gap: 1rem;
+    margin: 2rem 0 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: none;
+  }
+  .steps li {
+    position: relative;
+    padding: 1.4rem;
+    border: 1px solid var(--sl-color-hairline-shade);
+    border-radius: 1rem;
+    background: var(--apiwiz-card-bg);
+  }
+  .step-n {
+    font-family: var(--mono);
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1;
+    background: linear-gradient(135deg, #7a12d8, #0a7cff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .steps h3 {
+    margin-top: 0.9rem;
+    font-size: 1.05rem;
+  }
+  .steps p {
+    margin: 0.4rem 0 1rem;
+    font-size: var(--sl-text-sm);
+    line-height: 1.55;
+    color: var(--sl-color-gray-2);
+  }
+  .steps a {
+    font-size: var(--sl-text-sm);
+    font-weight: 600;
+    color: var(--sl-color-accent);
+  }
+
+  /* ---------- Help band ---------- */
+  .help {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.25rem;
+    margin: 5rem 0 2rem;
+    padding: 2rem;
+    border-radius: 1.25rem;
+    background:
+      radial-gradient(circle at 0% 0%, rgb(212 0 245 / 0.18), transparent 45%),
+      radial-gradient(circle at 100% 100%, rgb(31 224 207 / 0.2), transparent 45%),
+      var(--apiwiz-panel-bg);
+    border: 1px solid var(--sl-color-hairline);
+  }
+  .help h2 { font-size: 1.4rem; }
+  .help p { margin: 0.35rem 0 0; color: var(--sl-color-gray-2); }
+  .help-actions { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+  .btn {
+    padding: 0.65rem 1.15rem;
+    border-radius: 999px;
+    border: 1px solid transparent;
+    background: var(--sl-color-accent);
+    color: var(--apiwiz-on-accent);
+    font: inherit;
+    font-size: var(--sl-text-sm);
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .btn.ghost {
+    background: transparent;
+    border-color: var(--sl-color-hairline-shade);
+    color: var(--sl-color-white);
+  }
+  .btn:hover { filter: brightness(1.08); }
+
+  @media (max-width: 72rem) {
+    .stages { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .flow { display: none; }
+  }
+  @media (max-width: 40rem) {
+    .stages { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .mods { display: none; }
+    .lifecycle { padding: 1rem; }
+    .cats { grid-template-columns: 1fr; }
+    .stats { gap: 1.25rem 2rem; }
+    .stats dt { font-size: 1.6rem; }
+  }
+</style>

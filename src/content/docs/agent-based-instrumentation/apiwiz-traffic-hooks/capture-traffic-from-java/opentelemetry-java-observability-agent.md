@@ -29,10 +29,10 @@ To integrate your Java application with the APIwiz Observability module, complet
 
 1. Download the `apiwiz-observability-javaagent.jar` file and copy it to the host running the application you're instrumenting.
 1. Modify your application's startup command to include the full path to the JAR file.
-  ```text
-  java -javaagent:path/to/apiwiz-javaagent.jar 
-  -jar myapp.jar
-  ```
+   ```text
+   java -javaagent:path/to/apiwiz-javaagent.jar 
+   -jar myapp.jar
+   ```
 
 The agent is attached and ready for configuration.
 

@@ -11,23 +11,23 @@ The Apiwiz Operator and `JavaInstrument` resource are deployed.
 To enable agent injection:
 
 1. In the application deployment manifest, add the following annotation:
-  ```text
-  apiwiz-java-instrumentation: apiwiz
-  ```
+   ```text
+   apiwiz-java-instrumentation: apiwiz
+   ```
 
    For example:
 
-  ```text
-  apiVersion: apps/v1
-  kind: Deployment
-  metadata:
-    annotations:
-      apiwiz-java-instrumentation: apiwiz
-      apiwiz.io/java-instrument-with-jdk: "true"
-    name: javaapp
-  spec:
-    replicas: 1
-  ```
+   ```text
+   apiVersion: apps/v1
+   kind: Deployment
+   metadata:
+     annotations:
+       apiwiz-java-instrumentation: apiwiz
+       apiwiz.io/java-instrument-with-jdk: "true"
+     name: javaapp
+   spec:
+     replicas: 1
+   ```
 1. Apply the updated manifest to your cluster.
 
 The application deployment is annotated for automatic Java Agent injection.
@@ -69,25 +69,25 @@ This procedure enables Apiwiz Java Agent injection through JDK\_JAVA\_OPTIONS fo
 To enable injection through JDK\_JAVA\_OPTIONS:
 
 1. In the application deployment manifest, add the following annotations:
-  ```text
-  annotations:
-    apiwiz-java-instrumentation: apiwiz
-    apiwiz.io/java-instrument-with-jdk: "true"
-  ```
+   ```text
+   annotations:
+     apiwiz-java-instrumentation: apiwiz
+     apiwiz.io/java-instrument-with-jdk: "true"
+   ```
 
   For example:
 
-  ```text
-  apiVersion: apps/v1
-  kind: Deployment
-  metadata:
-    annotations:
-      apiwiz-java-instrumentation: apiwiz
-      apiwiz.io/java-instrument-with-jdk: "true"
-    name: javaapp
-  spec:
-    replicas: 1
-  ```
+   ```text
+   apiVersion: apps/v1
+   kind: Deployment
+   metadata:
+     annotations:
+       apiwiz-java-instrumentation: apiwiz
+       apiwiz.io/java-instrument-with-jdk: "true"
+     name: javaapp
+   spec:
+     replicas: 1
+   ```
 1. Apply the updated manifest to your cluster.
 
 On the next check cycle, the operator adds the Apiwiz Java Agent configuration to JDK\_JAVA\_OPTIONS in the application container. To confirm the result, see [Verify agent injection](/agent-based-instrumentation/apiwiz-traffic-hooks/operator-java-instrumentation/verify-agent-injection/).
@@ -107,9 +107,9 @@ To switch an instrumented application to JDK\_JAVA\_OPTIONS:
 1. Wait for the operator's next check cycle, about five minutes, so the operator removes the existing instrumentation.
 1. In the application container, verify that JAVA\_TOOL\_OPTIONS no longer contains the Apiwiz Java Agent configuration.
 1. In the application deployment manifest, add the following annotations, and then apply the updated manifest:
-  ```text
-  apiwiz-java-instrumentation: apiwiz
-  apiwiz.io/java-instrument-with-jdk: "true"
-  ```
+   ```text
+   apiwiz-java-instrumentation: apiwiz
+   apiwiz.io/java-instrument-with-jdk: "true"
+   ```
 
 On the next check cycle, the operator instruments the application through JDK\_JAVA\_OPTIONS.

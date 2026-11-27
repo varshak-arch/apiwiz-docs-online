@@ -32,9 +32,9 @@ Do the following:
 
 1. Download [apiwiz-opentelemetry-dotnet-plugin.dll](https://drive.google.com/file/d/165wIPy3RCO2-7no-2iNWCl4or7hxOFp7/view?usp=drive_link).
 1. Copy the DLL to the `$OTEL_DOTNET_AUTO_HOME/net/` directory. Replace `<download-directory>` with the directory that contains the DLL:
-  ```shell
-  cp <download-directory>/apiwiz-opentelemetry-dotnet-plugin.dll $OTEL_DOTNET_AUTO_HOME/net/
-  ```
+   ```shell
+   cp <download-directory>/apiwiz-opentelemetry-dotnet-plugin.dll $OTEL_DOTNET_AUTO_HOME/net/
+   ```
 
 The plugin DLL is in the auto-instrumentation directory.
 
@@ -47,24 +47,24 @@ Set environment variables that load the plugin and send its telemetry to APIwiz.
 Do the following:
 
 1. Set `OTEL_DOTNET_AUTO_PLUGINS` to load the plugin:
-  ```shell
-  export OTEL_DOTNET_AUTO_PLUGINS="Apiwiz.Tracing.ApiwizOtelSdkPlugin, apiwiz-opentelemetry-dotnet-plugin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
-  ```
+   ```shell
+   export OTEL_DOTNET_AUTO_PLUGINS="Apiwiz.Tracing.ApiwizOtelSdkPlugin, apiwiz-opentelemetry-dotnet-plugin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
+   ```
 1. Set the resource attributes, OpenTelemetry Protocol \(OTLP\) exporter endpoints and headers, and APIwiz compliance variables. Replace every angle-bracket placeholder with your values:
-  ```shell
-  export OTEL_RESOURCE_ATTRIBUTES="service.category=MICROSERVICE,service.type=DOTNET,service.name=<application-name>,environment=<environment-name>,host.name=<host-name>,host.ip=<host-ip>"
-  export OTEL_EXPORTER_OTLP_TRACES_ENDPOINT="https://<apiwiz-host>/v1/traces"
-  export OTEL_EXPORTER_OTLP_TRACES_HEADERS="x-client-id=<client-id>,x-client-secret=<client-secret>,index-name=<traces-index-name>"
-  export OTEL_EXPORTER_OTLP_TRACES_TIMEOUT="600000"
-  export OTEL_EXPORTER_OTLP_LOGS_ENDPOINT="https://<apiwiz-host>/v1/logs"
-  export OTEL_EXPORTER_OTLP_LOGS_HEADERS="x-client-id=<client-id>,x-client-secret=<client-secret>,index-name=<logs-index-name>"
-  export OTEL_EXPORTER_OTLP_LOGS_TIMEOUT="600000"
-  export OTEL_EXPORTER_OTLP_METRICS_ENDPOINT="https://<apiwiz-host>/v1/metrics"
-  export OTEL_EXPORTER_OTLP_METRICS_HEADERS="x-client-id=<client-id>,x-client-secret=<client-secret>"
-  export OTEL_EXPORTER_OTLP_METRICS_TIMEOUT="600000"
-  export APIWIZ_COMPLIANCE_SERVER_IP="<compliance-server-ip>"
-  export APIWIZ_INSTRUMENTATION_DEBUG="true"
-  ```
+   ```shell
+   export OTEL_RESOURCE_ATTRIBUTES="service.category=MICROSERVICE,service.type=DOTNET,service.name=<application-name>,environment=<environment-name>,host.name=<host-name>,host.ip=<host-ip>"
+   export OTEL_EXPORTER_OTLP_TRACES_ENDPOINT="https://<apiwiz-host>/v1/traces"
+   export OTEL_EXPORTER_OTLP_TRACES_HEADERS="x-client-id=<client-id>,x-client-secret=<client-secret>,index-name=<traces-index-name>"
+   export OTEL_EXPORTER_OTLP_TRACES_TIMEOUT="600000"
+   export OTEL_EXPORTER_OTLP_LOGS_ENDPOINT="https://<apiwiz-host>/v1/logs"
+   export OTEL_EXPORTER_OTLP_LOGS_HEADERS="x-client-id=<client-id>,x-client-secret=<client-secret>,index-name=<logs-index-name>"
+   export OTEL_EXPORTER_OTLP_LOGS_TIMEOUT="600000"
+   export OTEL_EXPORTER_OTLP_METRICS_ENDPOINT="https://<apiwiz-host>/v1/metrics"
+   export OTEL_EXPORTER_OTLP_METRICS_HEADERS="x-client-id=<client-id>,x-client-secret=<client-secret>"
+   export OTEL_EXPORTER_OTLP_METRICS_TIMEOUT="600000"
+   export APIWIZ_COMPLIANCE_SERVER_IP="<compliance-server-ip>"
+   export APIWIZ_INSTRUMENTATION_DEBUG="true"
+   ```
 
   The variables are described in the following table:
 
@@ -79,12 +79,12 @@ Run your application with OpenTelemetry auto-instrumentation enabled, and verify
 Do the following:
 
 1. Run your .NET application with OpenTelemetry auto-instrumentation enabled:
-  ```shell
-  dotnet run
-  ```
+   ```shell
+   dotnet run
+   ```
 1. In the application logs, verify that the following message appears:
-  ```text
-  Initializing ApiwizOtelSdkPlugin
-  ```
+   ```text
+   Initializing ApiwizOtelSdkPlugin
+   ```
 
 The plugin is initialized, and the application sends traces, logs, and metrics to APIwiz.

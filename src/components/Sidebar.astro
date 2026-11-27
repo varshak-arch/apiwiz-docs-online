@@ -5,12 +5,24 @@ import Default from '@astrojs/starlight/components/Sidebar.astro';
 import TopicTabs from './TopicTabs.astro';
 
 const isPageWithTopic = Astro.locals.starlightSidebarTopics?.isPageWithTopic;
+const current = Astro.locals.starlightSidebarTopics?.topics?.find((t) => t.isCurrent);
 ---
 
 {isPageWithTopic && <div class="mobile-topics md:sl-hidden"><TopicTabs /></div>}
+{current && <p class="sidebar-heading">{current.label}</p>}
 <Default />
 
 <style>
+  .sidebar-heading {
+    margin: 0.25rem 0 0.6rem;
+    padding-inline: 0.5rem;
+    font-family: var(--sl-font-mono);
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--sl-color-gray-3);
+  }
   .mobile-topics {
     margin-bottom: 1rem;
     padding-bottom: 0.5rem;

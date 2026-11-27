@@ -10,7 +10,9 @@
         "access-control"
       ],
       "icon": "rocket",
-      "description": "Learn what APIwiz is, sign up or self-host it, and set up access for your teams."
+      "description": "Learn what APIwiz is, sign up or self-host it, and set up access for your teams.",
+      "color": "#0a7cff",
+      "short": "Onboarding"
     },
     {
       "id": "plan-and-design",
@@ -21,7 +23,9 @@
         "api-catalog"
       ],
       "icon": "pencil",
-      "description": "Design OAS, GraphQL, AsyncAPI and SOAP APIs, lint them against your standards and publish them to a catalog."
+      "description": "Design OAS, GraphQL, AsyncAPI and SOAP APIs, lint them against your standards and publish them to a catalog.",
+      "color": "#7a12d8",
+      "short": "Design"
     },
     {
       "id": "federated-gateways",
@@ -36,7 +40,9 @@
         "krakend"
       ],
       "icon": "server",
-      "description": "Connect and manage APIs running on Nginx, Apigee, AWS, Axway, Azure, Kong and KrakenD from one place."
+      "description": "Connect and manage APIs running on Nginx, Apigee, AWS, Axway, Azure, Kong and KrakenD from one place.",
+      "color": "#00a3e0",
+      "short": "Gateways"
     },
     {
       "id": "observability-and-monitoring",
@@ -50,7 +56,9 @@
         "api-insights"
       ],
       "icon": "analytics",
-      "description": "Discover APIs from live traffic and follow every request through logs, traces, metrics and monitors."
+      "description": "Discover APIs from live traffic and follow every request through logs, traces, metrics and monitors.",
+      "color": "#13b8a6",
+      "short": "Observability"
     },
     {
       "id": "security-and-compliance",
@@ -60,7 +68,9 @@
         "api-compliance"
       ],
       "icon": "padlock",
-      "description": "Find vulnerabilities and keep live APIs in line with their specifications and policies."
+      "description": "Find vulnerabilities and keep live APIs in line with their specifications and policies.",
+      "color": "#e5267a",
+      "short": "Security"
     },
     {
       "id": "utilities",
@@ -70,7 +80,9 @@
         "service-registry"
       ],
       "icon": "puzzle",
-      "description": "Manage user consent and register the services and apps your APIs depend on."
+      "description": "Manage user consent and register the services and apps your APIs depend on.",
+      "color": "#f08a24",
+      "short": "Utilities"
     },
     {
       "id": "marketplace-and-monetization",
@@ -80,7 +92,9 @@
         "api-marketplace"
       ],
       "icon": "star",
-      "description": "Publish APIs to a developer marketplace and package them for paid consumption."
+      "description": "Publish APIs to a developer marketplace and package them for paid consumption.",
+      "color": "#c010e0",
+      "short": "Monetization"
     },
     {
       "id": "configurations-and-settings",
@@ -90,7 +104,9 @@
         "connectors"
       ],
       "icon": "setting",
-      "description": "Configure your workspace, users and roles, and connect gateways, source control and DevOps tools."
+      "description": "Configure your workspace, users and roles, and connect gateways, source control and DevOps tools.",
+      "color": "#5b6b88",
+      "short": "Settings"
     },
     {
       "id": "agent-based-instrumentation",
@@ -100,7 +116,9 @@
         "apiwiz-traffic-agent-hooks"
       ],
       "icon": "code-branch",
-      "description": "Capture API traffic from your services with APIwiz traffic hooks and agents."
+      "description": "Capture API traffic from your services with APIwiz traffic hooks and agents.",
+      "color": "#2f6bff",
+      "short": "Instrumentation"
     }
   ],
   "folderLabels": {

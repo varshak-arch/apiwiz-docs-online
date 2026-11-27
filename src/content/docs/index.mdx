@@ -1,31 +1,11 @@
 ---
 title: APIwiz documentation
-description: Design, secure, observe and monetize your APIs with APIwiz.
+description: Guides for the whole API lifecycle on APIwiz, from design and gateways to observability, security and monetization.
 template: splash
-hero:
-  tagline: APIwiz is a federated API management platform. Find guides for every stage of the API lifecycle, from design to monetization.
-  actions:
-    - text: Get started
-      link: /user-onboarding/get-started-with-apiwiz/introduction/
-      icon: right-arrow
-    - text: Explore the platform
-      link: /user-onboarding/get-started-with-apiwiz/explore-the-platform/
-      icon: open-book
-      variant: minimal
+tableOfContents: false
+pagefind: false
 ---
 
-import SectionCards from '../../components/SectionCards.astro';
-import { LinkCard, CardGrid } from '@astrojs/starlight/components';
+import Home from '../../components/Home.astro';
 
-<p class="landing-section-title">Browse by category</p>
-
-<SectionCards />
-
-<p class="landing-section-title">Popular pages</p>
-
-<CardGrid>
-  <LinkCard title="Why APIwiz" description="The problems APIwiz solves and how." href="/user-onboarding/get-started-with-apiwiz/why-apiwiz/" />
-  <LinkCard title="APIwiz platform canvas" description="A map of every module on the platform." href="/user-onboarding/get-started-with-apiwiz/apiwiz-platform-canvas/" />
-  <LinkCard title="Kubernetes installation" description="Install a self-hosted APIwiz on Kubernetes." href="/user-onboarding/self-hosted-platform/production-installation/kubernetes-installation/" />
-  <LinkCard title="Capture traffic with APIwiz traffic hooks" description="Send API traffic from your services to APIwiz." href="/agent-based-instrumentation/apiwiz-traffic-hooks/overview/" />
-</CardGrid>
+<Home />

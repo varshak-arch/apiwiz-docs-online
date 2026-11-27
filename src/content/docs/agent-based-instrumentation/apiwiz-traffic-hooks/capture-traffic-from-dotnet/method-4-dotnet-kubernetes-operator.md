@@ -55,21 +55,21 @@ Do the following:
 
 1. In `operator-deploy.yaml`, verify that the manager image points to the approved release image.
 1. Apply the manifest:
-  ```shell
-  kubectl apply -f operator-deploy.yaml
-  ```
+   ```shell
+   kubectl apply -f operator-deploy.yaml
+   ```
 1. Wait for the .NET CRD to be established:
-  ```shell
-  kubectl wait --for=condition=Established --timeout=60s \
-    crd/dotnetinstruments.operations.wizsource.apiwiz.io
-  ```
+   ```shell
+   kubectl wait --for=condition=Established --timeout=60s \
+     crd/dotnetinstruments.operations.wizsource.apiwiz.io
+   ```
 1. Wait for the operator Deployment to roll out, and verify that its pods are running:
-  ```shell
-  kubectl -n apiwiz-operator-system rollout status \
-    deployment/apiwiz-operator-controller-manager --timeout=180s
+   ```shell
+   kubectl -n apiwiz-operator-system rollout status \
+     deployment/apiwiz-operator-controller-manager --timeout=180s
 
-  kubectl -n apiwiz-operator-system get pods
-  ```
+   kubectl -n apiwiz-operator-system get pods
+   ```
 
 The operator is running in the `apiwiz-operator-system` namespace.
 
@@ -86,10 +86,10 @@ Do the following:
 
   The `env` section sets the following variables:
 1. Apply the resource, and verify that it exists:
-  ```shell
-  kubectl apply -f dotnetinstrument.yaml
-  kubectl -n <namespace> get dotnetinstrument apiwiz-dotnet-config
-  ```
+   ```shell
+   kubectl apply -f dotnetinstrument.yaml
+   kubectl -n <namespace> get dotnetinstrument apiwiz-dotnet-config
+   ```
 
 The DotNetInstrument resource is created, and the operator starts reconciling the matching Deployments.
 
@@ -132,13 +132,13 @@ Do the following:
 1. Create a Deployment manifest named `sample-api-deployment.yaml`. Add the matched label to the Deployment's top-level `metadata.labels`, not only to `spec.template.metadata.labels`:
 
 1. Apply the Deployment:
-  ```shell
-  kubectl apply -f sample-api-deployment.yaml
-  ```
+   ```shell
+   kubectl apply -f sample-api-deployment.yaml
+   ```
 1. Follow the operator logs until the Deployment is instrumented:
-  ```shell
-  kubectl -n apiwiz-operator-system logs deployment/apiwiz-operator-controller-manager --follow
-  ```
+   ```shell
+   kubectl -n apiwiz-operator-system logs deployment/apiwiz-operator-controller-manager --follow
+   ```
 
 The operator instruments the Deployment on its next reconciliation. The controller reconciles the DotNetInstrument resource and retries every two minutes. It doesn't watch Deployment changes directly, so a new Deployment can take up to one cycle to be instrumented.
 
@@ -183,9 +183,9 @@ Verify that the operator added the instrumentation to the Deployment and that th
 Do the following:
 
 1. Get the Deployment and its pod template:
-  ```shell
-  kubectl -n default get deployment sample-api -o yaml
-  ```
+   ```shell
+   kubectl -n default get deployment sample-api -o yaml
+   ```
 1. In the output, verify that the following items are present:
   - The `apiwiz.io/dotnet-instrument: Successful` annotation on the Deployment
   - The `opentelemetry-auto-instrumentation-dotnet` init container
@@ -193,12 +193,12 @@ Do the following:
   - The volume mount at `/otel-auto-instrumentation-dotnet`
   - Profiler environment variables, such as `CORECLR_ENABLE_PROFILING`, `CORECLR_PROFILER`, `CORECLR_PROFILER_PATH`, and `DOTNET_STARTUP_HOOKS`
 1. Wait for the Deployment rollout, and inspect its pods and events:
-  ```shell
-  kubectl -n default rollout status deployment/sample-api
-  kubectl -n default get pods
-  kubectl -n default describe pod <sample-api-pod>
-  kubectl -n default get events --sort-by=.lastTimestamp
-  ```
+   ```shell
+   kubectl -n default rollout status deployment/sample-api
+   kubectl -n default get pods
+   kubectl -n default describe pod <sample-api-pod>
+   kubectl -n default get events --sort-by=.lastTimestamp
+   ```
 
 The Deployment is instrumented, and its pods run with the .NET profiler.
 
@@ -265,13 +265,13 @@ Upgrade the operator by applying the updated bundle from a new release. Use `ope
 Do the following:
 
 1. Apply the updated bundle:
-  ```shell
-  kubectl apply -f operator-deploy.yaml
-  ```
+   ```shell
+   kubectl apply -f operator-deploy.yaml
+   ```
 1. Wait for the operator rollout:
-  ```shell
-  kubectl -n apiwiz-operator-system rollout status deployment/apiwiz-operator-controller-manager --timeout=180s
-  ```
+   ```shell
+   kubectl -n apiwiz-operator-system rollout status deployment/apiwiz-operator-controller-manager --timeout=180s
+   ```
 
 The operator runs the new release.
 
