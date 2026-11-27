@@ -14,41 +14,18 @@ hero:
       variant: minimal
 ---
 
-import { Card, CardGrid, LinkCard } from '@astrojs/starlight/components';
+import SectionCards from '../../components/SectionCards.astro';
+import { LinkCard, CardGrid } from '@astrojs/starlight/components';
 
 <p class="landing-section-title">Browse by category</p>
 
-<CardGrid>
-  <Card title="User onboarding" icon="rocket">
-    Learn what APIwiz is, sign up, install it and set up your workspace, teams and access.
-
-    [Introduction](/user-onboarding/get-started-with-apiwiz/introduction/) · [Deployment](/user-onboarding/self-hosted-platform/production-installation/kubernetes-installation/) · [Settings](/configurations-and-settings/settings/workspace-configuration/)
-  </Card>
-  <Card title="Plan and Design" icon="pencil">
-    Design OAS, GraphQL, AsyncAPI and SOAP APIs, then lint, secure and catalog them.
-
-    [API Design](/plan-and-design/api-design/introduction/) · [API Linting](/plan-and-design/api-linting/overview/) · [API Catalog](/plan-and-design/api-catalog/overview/)
-  </Card>
-  <Card title="Observability and Monitoring" icon="magnifier">
-    Discover APIs from live traffic and monitor logs, traces and metrics.
-
-    [API Insights](/observability-and-monitoring/api-insights/overview/) · [Transaction logs](/observability-and-monitoring/api-transaction-logs/overview/) · [Tracing](/observability-and-monitoring/api-tracing/overview/)
-  </Card>
-  <Card title="Marketplace and Monetization" icon="star">
-    Publish APIs to a marketplace and package them for paid consumption.
-
-    [API Marketplace](/marketplace-and-monetization/api-marketplace/overview/) · [API Monetization](/marketplace-and-monetization/api-monetization/overview/)
-  </Card>
-  <Card title="Federated Gateways" icon="puzzle">
-    Connect Apigee, AWS, Azure, Axway, Kong, KrakenD and Nginx, plus DevOps connectors.
-
-    [Apigee](/federated-gateways/apigee/overview/) · [Kong](/federated-gateways/kong/overview/) · [Connectors](/configurations-and-settings/connectors/overview/)
-  </Card>
-</CardGrid>
+<SectionCards />
 
 <p class="landing-section-title">Popular pages</p>
 
 <CardGrid>
   <LinkCard title="Why APIwiz" description="The problems APIwiz solves and how." href="/user-onboarding/get-started-with-apiwiz/why-apiwiz/" />
   <LinkCard title="APIwiz platform canvas" description="A map of every module on the platform." href="/user-onboarding/get-started-with-apiwiz/apiwiz-platform-canvas/" />
+  <LinkCard title="Kubernetes installation" description="Install a self-hosted APIwiz on Kubernetes." href="/user-onboarding/self-hosted-platform/production-installation/kubernetes-installation/" />
+  <LinkCard title="Capture traffic with APIwiz traffic hooks" description="Send API traffic from your services to APIwiz." href="/agent-based-instrumentation/apiwiz-traffic-hooks/overview/" />
 </CardGrid>

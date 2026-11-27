@@ -1,7 +1,8 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
-import { sidebar } from './scripts/sidebar.mjs';
+import starlightSidebarTopics from 'starlight-sidebar-topics';
+import { topics } from './scripts/sidebar.mjs';
 
 // Update `site` once the production domain is known (used for sitemap + canonical URLs).
 export default defineConfig({
@@ -25,10 +26,11 @@ export default defineConfig({
       ],
       components: {
         Header: './src/components/Header.astro',
+        Sidebar: './src/components/Sidebar.astro',
         PageTitle: './src/components/PageTitle.astro',
         Footer: './src/components/Footer.astro',
       },
-      sidebar: sidebar(),
+      plugins: [starlightSidebarTopics(topics(), { exclude: ['/'] })],
     }),
   ],
 });

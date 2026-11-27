@@ -1,0 +1,160 @@
+---
+// Card grids built from the sidebar data, so they stay in sync as pages are added.
+// - <SectionCards section="id" />: one card per folder in that section.
+// - <SectionCards />: one card per section (home page).
+import fs from 'node:fs';
+import path from 'node:path';
+import { Icon } from '@astrojs/starlight/components';
+import { nav, sectionGroups, firstPage, pageCount } from '../../scripts/sidebar.mjs';
+
+interface Props {
+  section?: string;
+}
+const { section } = Astro.props;
+
+function summary(slug: string, max = 150) {
+  const base = path.resolve('src/content/docs', slug);
+  const file = ['.md', '.mdx'].map((e) => base + e).find((f) => fs.existsSync(f));
+  if (!file) return '';
+  const body = fs.readFileSync(file, 'utf8').replace(/^---[\s\S]*?---/, '');
+  const para =
+    body
+      .split(/\n\s*\n/)
+      .map((p) => p.trim())
+      .find((p) => p && !/^(#|!\[|[-*] |\d+\.|\||:::|<|```|>)/.test(p)) ?? '';
+  const text = para
+    .replace(/!\[[^\]]*\]\([^)]*\)/g, '')
+    .replace(/\[([^\]]+)\]\([^)]*\)/g, '$1')
+    .replace(/[*_`\\]/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+  return text.length > max ? text.slice(0, text.lastIndexOf(' ', max)) + '…' : text;
+}
+
+const href = (slug: string) => `/${slug}/`;
+
+const cards = section
+  ? sectionGroups(section).map((g) => {
+      const first = firstPage(g);
+      return { title: g.label, href: href(first), text: summary(first), meta: `${pageCount(g)} pages`, icon: undefined };
+    })
+  : nav.sections.map((s: any) => {
+      const groups = sectionGroups(s.id);
+      return {
+        title: s.label,
+        href: href(s.id),
+        text: s.description,
+        icon: s.icon,
+        meta: groups.map((g) => g.label).slice(0, 4).join(' · ') + (groups.length > 4 ? ` +${groups.length - 4}` : ''),
+      };
+    });
+---
+
+<div class:list={['section-cards not-content', { home: !section }]}>
+  {
+    cards.map((c) => (
+      <a class="section-card" href={c.href}>
+        <div class="head">
+          {c.icon && (
+            <span class="icon">
+              <Icon name={c.icon as any} size="1.15rem" />
+            </span>
+          )}
+          <span class="title">{c.title}</span>
+          <span class="arrow" aria-hidden="true">→</span>
+        </div>
+        {c.text && <p class="text">{c.text}</p>}
+        <p class="meta">{c.meta}</p>
+      </a>
+    ))
+  }
+</div>
+
+<style>
+  .section-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(15.5rem, 1fr));
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+  .section-cards.home {
+    grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
+  }
+  .section-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+    padding: 1.15rem 1.2rem 1.05rem;
+    border: 1px solid var(--sl-color-hairline-shade);
+    border-radius: 0.9rem;
+    background: var(--apiwiz-card-bg);
+    color: inherit;
+    text-decoration: none;
+    overflow: hidden;
+    transition:
+      border-color 140ms ease,
+      transform 140ms ease,
+      box-shadow 140ms ease;
+  }
+  .section-card::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto;
+    height: 3px;
+    background: var(--apiwiz-gradient);
+    opacity: 0;
+    transition: opacity 140ms ease;
+  }
+  .section-card:hover {
+    border-color: color-mix(in srgb, var(--sl-color-accent) 55%, transparent);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px -18px color-mix(in srgb, var(--sl-color-accent) 70%, transparent);
+  }
+  .section-card:hover::before {
+    opacity: 1;
+  }
+  .head {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  .icon {
+    display: grid;
+    place-items: center;
+    width: 2rem;
+    height: 2rem;
+    flex-shrink: 0;
+    border-radius: 0.55rem;
+    background: var(--sl-color-accent-low);
+    color: var(--sl-color-accent);
+  }
+  .title {
+    font-weight: 650;
+    font-size: var(--sl-text-base);
+    color: var(--sl-color-white);
+    line-height: 1.3;
+  }
+  .arrow {
+    margin-inline-start: auto;
+    color: var(--sl-color-gray-4);
+    transition:
+      transform 140ms ease,
+      color 140ms ease;
+  }
+  .section-card:hover .arrow {
+    transform: translateX(3px);
+    color: var(--sl-color-accent);
+  }
+  .text {
+    margin: 0;
+    font-size: var(--sl-text-sm);
+    line-height: 1.55;
+    color: var(--sl-color-gray-2);
+  }
+  .meta {
+    margin: auto 0 0;
+    font-size: var(--sl-text-xs);
+    color: var(--sl-color-gray-3);
+  }
+</style>

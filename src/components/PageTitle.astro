@@ -18,6 +18,7 @@ function findGroup(items: Item[], parent?: string): string | undefined {
 }
 const eyebrow = findGroup(sidebar);
 const isSplash = entry.data.template === 'splash';
+const isSectionIndex = !entry.id.includes('/');
 const markdown = `# ${entry.data.title}\n\n${entry.body ?? ''}`;
 ---
 
@@ -25,7 +26,7 @@ const markdown = `# ${entry.data.title}\n\n${entry.body ?? ''}`;
 <div class="title-row">
   <h1 id={PAGE_TITLE_ID}>{entry.data.title}</h1>
   {
-    !isSplash && (
+    !isSplash && !isSectionIndex && (
       <copy-page class="print:hidden">
         <button type="button" data-copy aria-label="Copy this page as Markdown">
           <Icon name="document" size="0.95rem" />

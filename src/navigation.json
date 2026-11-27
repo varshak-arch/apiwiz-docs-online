@@ -8,7 +8,9 @@
         "vendor-managed-platform",
         "self-hosted-platform",
         "access-control"
-      ]
+      ],
+      "icon": "rocket",
+      "description": "Learn what APIwiz is, sign up or self-host it, and set up access for your teams."
     },
     {
       "id": "plan-and-design",
@@ -17,7 +19,9 @@
         "api-design",
         "api-linting",
         "api-catalog"
-      ]
+      ],
+      "icon": "pencil",
+      "description": "Design OAS, GraphQL, AsyncAPI and SOAP APIs, lint them against your standards and publish them to a catalog."
     },
     {
       "id": "federated-gateways",
@@ -30,7 +34,9 @@
         "azure",
         "kong",
         "krakend"
-      ]
+      ],
+      "icon": "server",
+      "description": "Connect and manage APIs running on Nginx, Apigee, AWS, Axway, Azure, Kong and KrakenD from one place."
     },
     {
       "id": "observability-and-monitoring",
@@ -42,7 +48,9 @@
         "metrics",
         "api-monitoring",
         "api-insights"
-      ]
+      ],
+      "icon": "analytics",
+      "description": "Discover APIs from live traffic and follow every request through logs, traces, metrics and monitors."
     },
     {
       "id": "security-and-compliance",
@@ -50,7 +58,9 @@
       "folders": [
         "api-security",
         "api-compliance"
-      ]
+      ],
+      "icon": "padlock",
+      "description": "Find vulnerabilities and keep live APIs in line with their specifications and policies."
     },
     {
       "id": "utilities",
@@ -58,7 +68,9 @@
       "folders": [
         "consent-management",
         "service-registry"
-      ]
+      ],
+      "icon": "puzzle",
+      "description": "Manage user consent and register the services and apps your APIs depend on."
     },
     {
       "id": "marketplace-and-monetization",
@@ -66,7 +78,9 @@
       "folders": [
         "api-monetization",
         "api-marketplace"
-      ]
+      ],
+      "icon": "star",
+      "description": "Publish APIs to a developer marketplace and package them for paid consumption."
     },
     {
       "id": "configurations-and-settings",
@@ -74,7 +88,9 @@
       "folders": [
         "settings",
         "connectors"
-      ]
+      ],
+      "icon": "setting",
+      "description": "Configure your workspace, users and roles, and connect gateways, source control and DevOps tools."
     },
     {
       "id": "agent-based-instrumentation",
@@ -82,7 +98,9 @@
       "folders": [
         "apiwiz-traffic-hooks",
         "apiwiz-traffic-agent-hooks"
-      ]
+      ],
+      "icon": "code-branch",
+      "description": "Capture API traffic from your services with APIwiz traffic hooks and agents."
     }
   ],
   "folderLabels": {

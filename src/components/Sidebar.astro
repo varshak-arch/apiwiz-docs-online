@@ -1,0 +1,35 @@
+---
+// Desktop: topic switching lives in the header tabs, so the sidebar shows only the current topic's pages.
+// Mobile: the header tabs are hidden, so the topic list is shown at the top of the slide-out menu.
+import Default from '@astrojs/starlight/components/Sidebar.astro';
+import TopicTabs from './TopicTabs.astro';
+
+const isPageWithTopic = Astro.locals.starlightSidebarTopics?.isPageWithTopic;
+---
+
+{isPageWithTopic && <div class="mobile-topics md:sl-hidden"><TopicTabs /></div>}
+<Default />
+
+<style>
+  .mobile-topics {
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--sl-color-hairline);
+  }
+  .mobile-topics :global(ul) {
+    flex-direction: column;
+    -webkit-mask-image: none;
+    mask-image: none;
+    gap: 0;
+  }
+  .mobile-topics :global(a) {
+    border-radius: 0.4rem;
+    padding: 0.55rem 0.6rem;
+  }
+  .mobile-topics :global(a[aria-current='page']) {
+    background: var(--sl-color-accent-low);
+  }
+  .mobile-topics :global(a[aria-current='page']::after) {
+    display: none;
+  }
+</style>

@@ -6,11 +6,11 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 const DOCS = path.resolve('src/content/docs');
-const nav = JSON.parse(fs.readFileSync(path.resolve('src/navigation.json'), 'utf8'));
+export const nav = JSON.parse(fs.readFileSync(path.resolve('src/navigation.json'), 'utf8'));
 
 const titleCase = (s) => s.replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
 
-function readMeta(file) {
+export function readMeta(file) {
   const src = fs.readFileSync(file, 'utf8');
   const fm = src.match(/^---\n([\s\S]*?)\n---/)?.[1] ?? '';
   const title = fm.match(/^title:\s*"?(.*?)"?\s*$/m)?.[1] ?? path.basename(file, path.extname(file));
@@ -18,7 +18,7 @@ function readMeta(file) {
   return { title: title.replace(/\\"/g, '"'), order };
 }
 
-function folder(rel, collapsed) {
+export function folder(rel, collapsed) {
   const abs = path.join(DOCS, rel);
   const entries = fs.readdirSync(abs, { withFileTypes: true });
   const pages = entries
@@ -36,18 +36,39 @@ function folder(rel, collapsed) {
   };
 }
 
-// One sidebar for the whole site: each section from navigation.json is a heading,
-// and each folder inside it is a collapsible group.
-export function sidebar() {
+function sectionFolders(sec) {
+  return [
+    ...sec.folders,
+    ...fs
+      .readdirSync(path.join(DOCS, sec.id), { withFileTypes: true })
+      .filter((e) => e.isDirectory() && !sec.folders.includes(e.name))
+      .map((e) => e.name),
+  ];
+}
+
+// First page of a folder (following sidebar order), used for card links.
+export function firstPage(group) {
+  const first = group.items[0];
+  return typeof first === 'string' ? first : firstPage(first);
+}
+
+// Count of pages in a folder, including sub-folders.
+export function pageCount(group) {
+  return group.items.reduce((n, i) => n + (typeof i === 'string' ? 1 : pageCount(i)), 0);
+}
+
+export function sectionGroups(sectionId) {
+  const sec = nav.sections.find((s) => s.id === sectionId);
+  return sectionFolders(sec).map((f) => ({ id: f, ...folder(`${sec.id}/${f}`, true) }));
+}
+
+// One header tab per section; each tab has its own sidebar (section overview + folder groups).
+export function topics() {
   return nav.sections.map((sec) => ({
+    id: sec.id,
     label: sec.label,
-    collapsed: false,
-    items: [
-      ...sec.folders,
-      ...fs
-        .readdirSync(path.join(DOCS, sec.id), { withFileTypes: true })
-        .filter((e) => e.isDirectory() && !sec.folders.includes(e.name))
-        .map((e) => e.name),
-    ].map((f) => folder(`${sec.id}/${f}`, true)),
+    icon: sec.icon,
+    link: `/${sec.id}/`,
+    items: [sec.id, ...sectionGroups(sec.id).map(({ id, ...g }) => g)],
   }));
 }
