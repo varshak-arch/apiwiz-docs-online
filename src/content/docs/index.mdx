@@ -1,0 +1,54 @@
+---
+title: APIwiz documentation
+description: Design, secure, observe and monetize your APIs with APIwiz.
+template: splash
+hero:
+  tagline: APIwiz is a federated API management platform. Find guides for every stage of the API lifecycle, from design to monetization.
+  actions:
+    - text: Get started
+      link: /get-started/get-started-with-apiwiz/introduction/
+      icon: right-arrow
+    - text: Explore the platform
+      link: /get-started/get-started-with-apiwiz/explore-the-platform/
+      icon: open-book
+      variant: minimal
+---
+
+import { Card, CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+<p class="landing-section-title">Browse by area</p>
+
+<CardGrid>
+  <Card title="Get started" icon="rocket">
+    Learn what APIwiz is, sign up, install it and set up your workspace, teams and access.
+
+    [Introduction](/get-started/get-started-with-apiwiz/introduction/) · [Deployment](/get-started/deployment-and-installation/production-installation/kubernetes-installation/) · [Settings](/get-started/settings/workspace-configuration/)
+  </Card>
+  <Card title="Design & govern" icon="pencil">
+    Design OAS, GraphQL, AsyncAPI and SOAP APIs, then lint, secure and catalog them.
+
+    [API Design](/design/api-design/introduction/) · [API Linting](/design/api-linting/overview/) · [API Catalog](/design/api-catalog/overview/)
+  </Card>
+  <Card title="Observe" icon="magnifier">
+    Discover APIs from live traffic and monitor logs, traces and metrics.
+
+    [API Insights](/observe/api-insights/overview/) · [Transaction logs](/observe/api-transaction-logs/overview/) · [Tracing](/observe/api-tracing/overview/)
+  </Card>
+  <Card title="Marketplace & monetization" icon="star">
+    Publish APIs to a marketplace and package them for paid consumption.
+
+    [API Marketplace](/monetize/api-marketplace/overview/) · [API Monetization](/monetize/api-monetization/overview/)
+  </Card>
+  <Card title="Gateways & integrations" icon="puzzle">
+    Connect Apigee, AWS, Azure, Axway, Kong, KrakenD and Nginx, plus DevOps connectors.
+
+    [Apigee](/integrations/apigee/overview/) · [Kong](/integrations/kong/overview/) · [Connectors](/integrations/connectors/overview/)
+  </Card>
+</CardGrid>
+
+<p class="landing-section-title">Popular pages</p>
+
+<CardGrid>
+  <LinkCard title="Why APIwiz" description="The problems APIwiz solves and how." href="/get-started/get-started-with-apiwiz/why-apiwiz/" />
+  <LinkCard title="APIwiz platform canvas" description="A map of every module on the platform." href="/get-started/get-started-with-apiwiz/apiwiz-platform-canvas/" />
+</CardGrid>

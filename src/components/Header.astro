@@ -1,0 +1,96 @@
+---
+import config from 'virtual:starlight/user-config';
+import Search from 'virtual:starlight/components/Search';
+import SiteTitle from 'virtual:starlight/components/SiteTitle';
+import SocialIcons from 'virtual:starlight/components/SocialIcons';
+import ThemeSelect from 'virtual:starlight/components/ThemeSelect';
+import TopicTabs from './TopicTabs.astro';
+
+const hasTopics = Boolean(Astro.locals.starlightSidebarTopics?.topics?.length);
+const shouldRenderSearch = config.pagefind || config.components.Search !== '@astrojs/starlight/components/Search.astro';
+---
+
+<div class="header-shell">
+  <div class="header-row">
+    <div class="title-wrapper sl-flex"><SiteTitle /></div>
+    <div class="search-wrapper sl-flex print:hidden">{shouldRenderSearch && <Search />}</div>
+    <div class="sl-hidden md:sl-flex print:hidden right-group">
+      <a class="header-link" href="mailto:support@apiwiz.io">Support</a>
+      <a class="header-cta" href="https://www.apiwiz.io" target="_blank" rel="noopener">Open APIwiz</a>
+      <div class="sl-flex social-icons"><SocialIcons /></div>
+      <ThemeSelect />
+    </div>
+  </div>
+  {hasTopics && <div class="tabs-row sl-hidden md:sl-flex print:hidden"><TopicTabs /></div>}
+</div>
+
+<style>
+  .header-shell {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  .header-row {
+    display: flex;
+    gap: var(--sl-nav-gap);
+    align-items: center;
+    justify-content: space-between;
+    height: var(--apiwiz-header-row);
+    flex-shrink: 0;
+  }
+  .title-wrapper {
+    overflow: clip;
+    padding: 0.25rem;
+    margin: -0.25rem;
+    min-width: 0;
+  }
+  .search-wrapper {
+    flex: 1;
+    justify-content: center;
+  }
+  .right-group {
+    gap: 1rem;
+    align-items: center;
+  }
+  .social-icons {
+    gap: 1rem;
+    align-items: center;
+  }
+  .header-link {
+    font-size: var(--sl-text-sm);
+    font-weight: 500;
+    color: var(--sl-color-gray-2);
+    text-decoration: none;
+  }
+  .header-link:hover {
+    color: var(--sl-color-white);
+  }
+  .header-cta {
+    font-size: var(--sl-text-sm);
+    font-weight: 600;
+    padding: 0.45rem 0.9rem;
+    border-radius: 999px;
+    background: var(--sl-color-accent);
+    color: var(--apiwiz-on-accent);
+    text-decoration: none;
+    transition: background 120ms ease;
+  }
+  .header-cta:hover {
+    background: var(--sl-color-accent-high);
+    color: var(--apiwiz-on-accent);
+  }
+  .tabs-row {
+    flex: 1;
+    align-items: flex-end;
+  }
+  @media (min-width: 50rem) {
+    .search-wrapper :global(site-search) {
+      width: 100%;
+      max-width: 32rem;
+    }
+    .search-wrapper :global(button[data-open-modal]) {
+      max-width: none;
+      width: 100%;
+    }
+  }
+</style>

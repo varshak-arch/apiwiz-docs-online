@@ -1,0 +1,121 @@
+---
+import { Icon } from '@astrojs/starlight/components';
+const PAGE_TITLE_ID = '_top'; // must match Starlight's internal title id
+
+const route = Astro.locals.starlightRoute;
+const { entry, sidebar } = route;
+
+// Find the sidebar group that holds the current page, to show it as an eyebrow above the title.
+type Item = (typeof sidebar)[number];
+function findGroup(items: Item[], parent?: string): string | undefined {
+  for (const item of items) {
+    if (item.type === 'link' && item.isCurrent) return parent;
+    if (item.type === 'group') {
+      const found = findGroup(item.entries as Item[], item.label);
+      if (found) return found;
+    }
+  }
+}
+const eyebrow = findGroup(sidebar);
+const isSplash = entry.data.template === 'splash';
+const markdown = `# ${entry.data.title}\n\n${entry.body ?? ''}`;
+---
+
+{!isSplash && eyebrow && <p class="eyebrow">{eyebrow}</p>}
+<div class="title-row">
+  <h1 id={PAGE_TITLE_ID}>{entry.data.title}</h1>
+  {
+    !isSplash && (
+      <copy-page class="print:hidden">
+        <button type="button" data-copy aria-label="Copy this page as Markdown">
+          <Icon name="document" size="0.95rem" />
+          <span data-label>Copy page</span>
+        </button>
+        <template data-markdown set:text={markdown} />
+      </copy-page>
+    )
+  }
+</div>
+{!isSplash && entry.data.description && <p class="lede">{entry.data.description}</p>}
+
+<script>
+  class CopyPage extends HTMLElement {
+    connectedCallback() {
+      const button = this.querySelector<HTMLButtonElement>('[data-copy]');
+      const label = this.querySelector<HTMLElement>('[data-label]');
+      const tpl = this.querySelector<HTMLTemplateElement>('template[data-markdown]');
+      button?.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(tpl?.content.textContent ?? '');
+          if (label) label.textContent = 'Copied';
+        } catch {
+          if (label) label.textContent = 'Copy failed';
+        }
+        setTimeout(() => label && (label.textContent = 'Copy page'), 1800);
+      });
+    }
+  }
+  customElements.define('copy-page', CopyPage);
+</script>
+
+<style>
+  .eyebrow {
+    margin: 1rem 0 0;
+    font-size: var(--sl-text-xs);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--sl-color-accent);
+  }
+  .title-row {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+  h1 {
+    margin-top: 0.35rem;
+    font-size: var(--sl-text-h1);
+    line-height: var(--sl-line-height-headings);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--sl-color-white);
+  }
+  .eyebrow:not(:first-child) + .title-row h1,
+  .title-row:first-child h1 {
+    margin-top: 1rem;
+  }
+  copy-page {
+    flex-shrink: 0;
+    margin-top: 0.9rem;
+  }
+  copy-page button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.35rem 0.7rem;
+    font: inherit;
+    font-size: var(--sl-text-xs);
+    font-weight: 500;
+    color: var(--sl-color-gray-2);
+    background: var(--sl-color-bg);
+    border: 1px solid var(--sl-color-hairline-shade);
+    border-radius: 0.45rem;
+    cursor: pointer;
+  }
+  copy-page button:hover {
+    color: var(--sl-color-white);
+    border-color: var(--sl-color-gray-4);
+  }
+  .lede {
+    margin-top: 0.5rem;
+    font-size: var(--sl-text-lg);
+    line-height: 1.55;
+    color: var(--sl-color-gray-2);
+  }
+  @media (max-width: 40rem) {
+    copy-page span {
+      display: none;
+    }
+  }
+</style>

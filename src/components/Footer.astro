@@ -1,0 +1,78 @@
+---
+import Default from '@astrojs/starlight/components/Footer.astro';
+
+const { entry } = Astro.locals.starlightRoute;
+const isSplash = entry.data.template === 'splash';
+const issueUrl = `https://github.com/varshak-arch/apiwiz-docs-online/issues/new?title=${encodeURIComponent(
+  `Docs feedback: ${entry.data.title}`
+)}&body=${encodeURIComponent(`Page: ${Astro.url.pathname}\n\nWhat was missing or unclear?\n`)}`;
+---
+
+{
+  !isSplash && (
+    <page-feedback class="feedback print:hidden">
+      <div data-ask>
+        <span>Was this page helpful?</span>
+        <button type="button" data-vote="yes">Yes</button>
+        <button type="button" data-vote="no">No</button>
+      </div>
+      <p data-thanks hidden>Thanks for the feedback.</p>
+      <p data-more hidden>
+        Sorry about that. <a href={issueUrl} target="_blank" rel="noopener">Tell us what was missing</a>.
+      </p>
+    </page-feedback>
+  )
+}
+<Default />
+
+<script>
+  class PageFeedback extends HTMLElement {
+    connectedCallback() {
+      this.querySelectorAll<HTMLButtonElement>('[data-vote]').forEach((b) =>
+        b.addEventListener('click', () => {
+          this.querySelector<HTMLElement>('[data-ask]')!.hidden = true;
+          const target = b.dataset.vote === 'yes' ? '[data-thanks]' : '[data-more]';
+          this.querySelector<HTMLElement>(target)!.hidden = false;
+        })
+      );
+    }
+  }
+  customElements.define('page-feedback', PageFeedback);
+</script>
+
+<style>
+  .feedback {
+    display: block;
+    margin-top: 3rem;
+    padding: 1rem 1.25rem;
+    border: 1px solid var(--sl-color-hairline);
+    border-radius: 0.75rem;
+    font-size: var(--sl-text-sm);
+    color: var(--sl-color-gray-2);
+  }
+  .feedback [data-ask] {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  .feedback [data-ask] span {
+    margin-inline-end: auto;
+  }
+  .feedback button {
+    font: inherit;
+    padding: 0.3rem 0.9rem;
+    border-radius: 999px;
+    border: 1px solid var(--sl-color-hairline-shade);
+    background: transparent;
+    color: var(--sl-color-white);
+    cursor: pointer;
+  }
+  .feedback button:hover {
+    border-color: var(--sl-color-accent);
+    color: var(--sl-color-accent-high);
+  }
+  .feedback p {
+    margin: 0;
+  }
+</style>
