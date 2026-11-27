@@ -11,12 +11,9 @@ export default defineConfig({
     starlight({
       title: 'APIwiz Docs',
       description: 'Guides, tutorials and reference for the APIwiz API platform.',
-      logo: {
-        light: './src/assets/logo-light.svg',
-        dark: './src/assets/logo-dark.svg',
-        replacesTitle: true,
-      },
-      favicon: '/favicon.svg',
+      logo: { src: './src/assets/apiwiz-mark.png', alt: 'APIwiz' },
+      favicon: '/favicon.png',
+      head: [{ tag: 'link', attrs: { rel: 'apple-touch-icon', href: '/apple-touch-icon.png' } }],
       customCss: ['./src/styles/custom.css'],
       lastUpdated: true,
       pagination: true,

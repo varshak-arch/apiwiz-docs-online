@@ -14,11 +14,16 @@
   --sl-line-height: 1.7;
 }
 
+/* Logo gradient, used for small brand accents */
+:root {
+  --apiwiz-gradient: linear-gradient(90deg, #d400f5 0%, #7a12d8 30%, #0a7cff 65%, #1fe0cf 100%);
+}
+
 /* Dark theme (Starlight default when the OS is dark) */
 :root {
-  --sl-color-accent-low: #1a2150;
-  --sl-color-accent: #6b83ff;
-  --sl-color-accent-high: #c7d0ff;
+  --sl-color-accent-low: #0b2447;
+  --sl-color-accent: #2f9bff;
+  --sl-color-accent-high: #bfe0ff;
   --sl-color-white: #f5f6fa;
   --sl-color-gray-1: #e3e6ef;
   --sl-color-gray-2: #b9bfcf;
@@ -32,9 +37,9 @@
 }
 
 :root[data-theme='light'] {
-  --sl-color-accent-low: #e6eaff;
-  --sl-color-accent: #3451f0;
-  --sl-color-accent-high: #1c2c8f;
+  --sl-color-accent-low: #e3f0ff;
+  --sl-color-accent: #0a6cff;
+  --sl-color-accent-high: #003f99;
   --sl-color-white: #10131c;
   --sl-color-gray-1: #232838;
   --sl-color-gray-2: #3d4356;
@@ -175,7 +180,7 @@ starlight-toc a[aria-current='true'] {
 
 /* Keep the logo a fixed size even though the header is two rows tall */
 header .site-title img {
-  height: 1.75rem;
+  height: 1.9rem;
   width: auto;
 }
 
@@ -197,4 +202,13 @@ header .site-title img {
   color: var(--sl-color-gray-2);
   text-transform: none;
   letter-spacing: 0;
+}
+
+/* Site title next to the mark */
+header .site-title {
+  gap: 0.6rem;
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--sl-color-white);
 }
