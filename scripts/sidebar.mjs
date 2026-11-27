@@ -1,4 +1,4 @@
-// Builds each topic's sidebar from the folders in src/content/docs.
+// Builds the site sidebar from the folders in src/content/docs.
 // - Folder labels come from src/navigation.json (falls back to a title-cased folder name).
 // - Pages are ordered by `sidebar.order` frontmatter, then by title.
 // - Sub-folders are listed after the pages of their parent folder.
@@ -36,19 +36,18 @@ function folder(rel, collapsed) {
   };
 }
 
-export function topics() {
-  return nav.topics.map((t) => ({
-    id: t.id,
-    label: t.label,
-    icon: t.icon,
-    link: t.link,
-    // Folders listed in navigation.json come first, in that order; any new folder is appended.
+// One sidebar for the whole site: each section from navigation.json is a heading,
+// and each folder inside it is a collapsible group.
+export function sidebar() {
+  return nav.sections.map((sec) => ({
+    label: sec.label,
+    collapsed: false,
     items: [
-      ...t.folders,
+      ...sec.folders,
       ...fs
-        .readdirSync(path.join(DOCS, t.id), { withFileTypes: true })
-        .filter((e) => e.isDirectory() && !t.folders.includes(e.name))
+        .readdirSync(path.join(DOCS, sec.id), { withFileTypes: true })
+        .filter((e) => e.isDirectory() && !sec.folders.includes(e.name))
         .map((e) => e.name),
-    ].map((f) => folder(`${t.id}/${f}`, true)),
+    ].map((f) => folder(`${sec.id}/${f}`, true)),
   }));
 }

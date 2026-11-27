@@ -6,49 +6,49 @@ hero:
   tagline: APIwiz is a federated API management platform. Find guides for every stage of the API lifecycle, from design to monetization.
   actions:
     - text: Get started
-      link: /get-started/get-started-with-apiwiz/introduction/
+      link: /user-onboarding/get-started-with-apiwiz/introduction/
       icon: right-arrow
     - text: Explore the platform
-      link: /get-started/get-started-with-apiwiz/explore-the-platform/
+      link: /user-onboarding/get-started-with-apiwiz/explore-the-platform/
       icon: open-book
       variant: minimal
 ---
 
 import { Card, CardGrid, LinkCard } from '@astrojs/starlight/components';
 
-<p class="landing-section-title">Browse by area</p>
+<p class="landing-section-title">Browse by category</p>
 
 <CardGrid>
-  <Card title="Get started" icon="rocket">
+  <Card title="User onboarding" icon="rocket">
     Learn what APIwiz is, sign up, install it and set up your workspace, teams and access.
 
-    [Introduction](/get-started/get-started-with-apiwiz/introduction/) · [Deployment](/get-started/deployment-and-installation/production-installation/kubernetes-installation/) · [Settings](/get-started/settings/workspace-configuration/)
+    [Introduction](/user-onboarding/get-started-with-apiwiz/introduction/) · [Deployment](/user-onboarding/self-hosted-platform/production-installation/kubernetes-installation/) · [Settings](/configurations-and-settings/settings/workspace-configuration/)
   </Card>
-  <Card title="Design & govern" icon="pencil">
+  <Card title="Plan and Design" icon="pencil">
     Design OAS, GraphQL, AsyncAPI and SOAP APIs, then lint, secure and catalog them.
 
-    [API Design](/design/api-design/introduction/) · [API Linting](/design/api-linting/overview/) · [API Catalog](/design/api-catalog/overview/)
+    [API Design](/plan-and-design/api-design/introduction/) · [API Linting](/plan-and-design/api-linting/overview/) · [API Catalog](/plan-and-design/api-catalog/overview/)
   </Card>
-  <Card title="Observe" icon="magnifier">
+  <Card title="Observability and Monitoring" icon="magnifier">
     Discover APIs from live traffic and monitor logs, traces and metrics.
 
-    [API Insights](/observe/api-insights/overview/) · [Transaction logs](/observe/api-transaction-logs/overview/) · [Tracing](/observe/api-tracing/overview/)
+    [API Insights](/observability-and-monitoring/api-insights/overview/) · [Transaction logs](/observability-and-monitoring/api-transaction-logs/overview/) · [Tracing](/observability-and-monitoring/api-tracing/overview/)
   </Card>
-  <Card title="Marketplace & monetization" icon="star">
+  <Card title="Marketplace and Monetization" icon="star">
     Publish APIs to a marketplace and package them for paid consumption.
 
-    [API Marketplace](/monetize/api-marketplace/overview/) · [API Monetization](/monetize/api-monetization/overview/)
+    [API Marketplace](/marketplace-and-monetization/api-marketplace/overview/) · [API Monetization](/marketplace-and-monetization/api-monetization/overview/)
   </Card>
-  <Card title="Gateways & integrations" icon="puzzle">
+  <Card title="Federated Gateways" icon="puzzle">
     Connect Apigee, AWS, Azure, Axway, Kong, KrakenD and Nginx, plus DevOps connectors.
 
-    [Apigee](/integrations/apigee/overview/) · [Kong](/integrations/kong/overview/) · [Connectors](/integrations/connectors/overview/)
+    [Apigee](/federated-gateways/apigee/overview/) · [Kong](/federated-gateways/kong/overview/) · [Connectors](/configurations-and-settings/connectors/overview/)
   </Card>
 </CardGrid>
 
 <p class="landing-section-title">Popular pages</p>
 
 <CardGrid>
-  <LinkCard title="Why APIwiz" description="The problems APIwiz solves and how." href="/get-started/get-started-with-apiwiz/why-apiwiz/" />
-  <LinkCard title="APIwiz platform canvas" description="A map of every module on the platform." href="/get-started/get-started-with-apiwiz/apiwiz-platform-canvas/" />
+  <LinkCard title="Why APIwiz" description="The problems APIwiz solves and how." href="/user-onboarding/get-started-with-apiwiz/why-apiwiz/" />
+  <LinkCard title="APIwiz platform canvas" description="A map of every module on the platform." href="/user-onboarding/get-started-with-apiwiz/apiwiz-platform-canvas/" />
 </CardGrid>

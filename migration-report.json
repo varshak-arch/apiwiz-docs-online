@@ -1,0 +1,125 @@
+{
+  "collisions": [
+    {
+      "kept": "API Catalog/GraphQL Catalog.md",
+      "dropped": [
+        "API Catalog/GraphQL catalog.md"
+      ]
+    },
+    {
+      "kept": "API Catalog/OAS Catalog.md",
+      "dropped": [
+        "API Catalog/OAS catalog.md"
+      ]
+    },
+    {
+      "kept": "API Marketplace/Account and Billing/My Profile.md",
+      "dropped": [
+        "API Marketplace/Account and Billing/My profile.md"
+      ]
+    },
+    {
+      "kept": "API Marketplace/Setup and configuration/Manage Gateway.md",
+      "dropped": [
+        "API Marketplace/Setup and configuration/Manage gateway.md"
+      ]
+    },
+    {
+      "kept": "API Marketplace/Support and Administration/User Interactions.md",
+      "dropped": [
+        "API Marketplace/Support and Administration/User interactions.md"
+      ]
+    },
+    {
+      "kept": "API Tracing/Creating from a trace.md",
+      "dropped": [
+        "API Tracing/Creating from a Trace.md"
+      ]
+    },
+    {
+      "kept": "API Tracing/Trace List.md",
+      "dropped": [
+        "API Tracing/Trace list.md"
+      ]
+    },
+    {
+      "kept": "API Tracing/Trace view.md",
+      "dropped": [
+        "API Tracing/Trace View.md"
+      ]
+    },
+    {
+      "kept": "Access control/Team-based access control (TBAC).md",
+      "dropped": [
+        "Access control/Team-Based Access Control (TBAC).md"
+      ]
+    },
+    {
+      "kept": "Deployment and Installation/Node setup/Docker Compose.md",
+      "dropped": [
+        "Deployment and Installation/Node setup/Docker compose.md"
+      ]
+    }
+  ],
+  "images": 562,
+  "links_fixed": 120,
+  "links_unresolved": [
+    "https://docs.apiwiz.io/guides?guideId=6a5778593c41693bb70f647b&pageId=6af2a639ece53ecb65e4f278&version=1&groupId=OAS",
+    "https://docs.apiwiz.io/guides?guideId=6a3b5896196683f9c8784e55&groupId=Related+information&pageId=6a3d35ddd0dd14afc277aad4#92c904fc-7cef-4866-8e80-91e194ff9213",
+    "https://docs.apiwiz.io/guides?guideId=6a3b5896196683f9c8784e55&groupId=Related+information&pageId=6a3d35ddd0dd14afc277aad4#92c904fc-7cef-4866-8e80-91e194ff9213",
+    "https://docs.apiwiz.io/guides?guideId=6a3b5896196683f9c8784e55&groupId=Related+information&pageId=6a3d35ddd0dd14afc277aad4#92c904fc-7cef-4866-8e80-91e194ff9213",
+    "https://docs.apiwiz.io/guides?guideId=6a3b5896196683f9c8784e55&groupId=Related+information&pageId=6a3d35ddd0dd14afc277aad4#92c904fc-7cef-4866-8e80-91e194ff9213",
+    "https://docs.apiwiz.io/guides?guideId=6a3b5896196683f9c8784e55&groupId=Related+information&pageId=6a3d35ddd0dd14afc277aad4#92c904fc-7cef-4866-8e80-91e194ff9213",
+    "https://docs.apiwiz.io/guides?guideId=6a5f9f0d69d1ae970571d98d&pageId=6a5fa3fb69d1ae970571dfb0#c1f191d3-2cbd-45e4-b881-27a3f2b28858",
+    "https://docs.apiwiz.io/guides?guideId=6a22b872070047a3a81f4972&groupId=Working+with+Async+API&pageId=6a3138452b6d03e0ddd4e5e3",
+    "https://docs.apiwiz.io/guides?guideId=6a22b872070047a3a81f4972&groupId=Working+with+Async+API&pageId=6a313b9e2b6d03e0ddd4e675",
+    "https://docs.apiwiz.io/guides?guideId=6a22b872070047a3a81f4972&groupId=Working+with+Async+API&pageId=6a313b9e2b6d03e0ddd4e675#c7c20d70-635b-4c98-b361-330b4639620f",
+    "https://docs.apiwiz.io/guides?guideId=6a22b872070047a3a81f4972&groupId=Working+with+Async+API&pageId=6a313b9e2b6d03e0ddd4e675#f641cc6d-dc78-43d4-bf6e-f1d8cb6376f9",
+    "https://docs.apiwiz.io/guides?guideId=6a22b872070047a3a81f4972&groupId=Working+with+Async+API&pageId=6a313b9e2b6d03e0ddd4e675#0a3120e9-cee9-4331-b762-46d9a80c0bc5",
+    "https://docs.apiwiz.io/guides?guideId=6a22b872070047a3a81f4972&groupId=Working+with+Async+API&pageId=6a313ba02b6d03e0ddd4e67f#a2d981a0-ab99-4dac-922d-eb878d8b3568",
+    "https://docs.apiwiz.io/guides?guideId=6a22b872070047a3a81f4972&groupId=Working+with+Async+API&pageId=6a313ba02b6d03e0ddd4e67f#6c291f88-2c60-44b0-9a70-c8e10ae98e2e",
+    "https://docs.apiwiz.io/guides?guideId=6a22b872070047a3a81f4972&groupId=Working+with+OAS&pageId=6a27bf11070047a3a81f543d#9e9c45d6-095c-44ad-973b-3715ba23bd29",
+    "https://docs.apiwiz.io/guides?guideId=6a3e41fcd0dd14afc277b20f&groupId=Connectors&pageId=6a4f69da17bd7511541fe6e2",
+    "https://docs.apiwiz.io/guides?guideId=6a22b872070047a3a81f4972&groupId=Working+with+OAS&pageId=6a27bf11070047a3a81f543d#0b87a40b-10f8-4565-803f-5837e5b181d3",
+    "https://docs.apiwiz.io/guides?guideId=6a22b872070047a3a81f4972&groupId=Working+with+Data+Dictionary&pageId=6a2fe5f92b6d03e0ddd4ccc7#661ad903-a54a-459d-9275-5e87597bf3c0",
+    "https://docs.apiwiz.io/guides?guideId=6a22b872070047a3a81f4972&groupId=Working+with+Data+Dictionary&pageId=6a30cc5a2b6d03e0ddd4d129#e691264b-0715-4132-82ce-3494f6891cc1",
+    "https://docs.apiwiz.io/guides?guideId=6a22b872070047a3a81f4972&groupId=Working+with+Data+Dictionary&pageId=6a30e0ef2b6d03e0ddd4d52c#fcc74c00-30c5-4dcf-8821-6f5c2dbfd741",
+    "https://docs.apiwiz.io/guides?guideId=6a22b872070047a3a81f4972&groupId=Working+with+Data+Dictionary&pageId=6a30e21c2b6d03e0ddd4d5fe",
+    "https://docs.apiwiz.io/guides?guideId=6a22b872070047a3a81f4972&groupId=Working+with+GraphQL&pageId=6a323be92b6d03e0ddd4ed96",
+    "https://docs.apiwiz.io/guides?guideId=6a22b872070047a3a81f4972&groupId=Working+with+OAS&pageId=6a33760acf1933e4d4c0feda",
+    "https://docs.apiwiz.io/guides?guideId=6a22b872070047a3a81f4972&groupId=Working+with+OAS&pageId=6a336bb8cf1933e4d4c0ec5b",
+    "https://docs.apiwiz.io/guides?guideId=6a22b872070047a3a81f4972&groupId=Working+with+OAS&pageId=6a2bb23fe5e2da36963ca7a4",
+    "https://docs.apiwiz.io/guides?guideId=6a22b872070047a3a81f4972&groupId=Working+with+OAS&pageId=6a336bb8cf1933e4d4c0ec5b#9360a6ec-9089-4371-9324-520ba5141ae9",
+    "https://docs.apiwiz.io/guides?guideId=6a22b872070047a3a81f4972&groupId=Working+with+OAS&pageId=6a336bb8cf1933e4d4c0ec5b#ba8025a1-4cd3-4954-8a4d-5e4674e9c5da",
+    "https://docs.apiwiz.io/guides?guideId=6a22b872070047a3a81f4972&groupId=Working+with+OAS&pageId=6a33760acf1933e4d4c0feda",
+    "https://docs.apiwiz.io/guides?guideId=6a22b872070047a3a81f4972&groupId=Working+with+OAS&pageId=6a2bc11ae5e2da36963caac5",
+    "https://docs.apiwiz.io/guides?guideId=6a22b872070047a3a81f4972&groupId=Working+with+OAS&pageId=6a2bc15ce5e2da36963caacf",
+    "https://docs.apiwiz.io/guides?guideId=6a22b872070047a3a81f4972&groupId=Working+with+OAS&pageId=6a2bd38ee5e2da36963cb2b7",
+    "https://docs.apiwiz.io/guides?guideId=6a22b872070047a3a81f4972&groupId=Working+with+OAS&pageId=6a2bd89be5e2da36963cb5bb#2fb84f7e-d1d3-436d-9571-dd143a344e04",
+    "https://docs.apiwiz.io/guides?guideId=6a3b5896196683f9c8784e55&groupId=API+Compliance&pageId=6a3ced02d0dd14afc2778f7e",
+    "https://docs.apiwiz.io/guides?guideId=6a22b872070047a3a81f4972&pageId=6a3425a9cf1933e4d4c13186&groupId=API+Linting",
+    "https://docs.apiwiz.io/guides?guideId=6a606b5269d1ae970571f1f1&pageId=6a88139af0c8e28fcc1bf9b2",
+    "https://docs.apiwiz.io/guides?guideId=6a606b3c69d1ae970571f1d9&pageId=6a82f8f6f0c8e28fcc1bb364&groupId=Manage",
+    "https://docs.apiwiz.io/guides?guideId=6a606b3c69d1ae970571f1d9&pageId=6a82f9aff0c8e28fcc1bb3c4&groupId=Manage",
+    "https://docs.apiwiz.io/guides?guideId=6a606b3c69d1ae970571f1d9&pageId=6a82faa7f0c8e28fcc1bb487&groupId=Manage",
+    "https://docs.apiwiz.io/guides?guideId=6a606b3c69d1ae970571f1d9&pageId=6a82fad5f0c8e28fcc1bb4a1&groupId=Manage",
+    "https://docs.apiwiz.io/guides?guideId=6a606b4369d1ae970571f1e1&pageId=6a72d77167839bf43da9e752",
+    "https://docs.apiwiz.io/guides?guideId=6a606b3c69d1ae970571f1d9&pageId=6a703f2a69d1ae970572c87a&version=1",
+    "https://docs.apiwiz.io/guides?guideId=6a606b4369d1ae970571f1e1&pageId=6a72d77167839bf43da9e752&version=1",
+    "https://docs.apiwiz.io/guides?guideId=6a606b4a69d1ae970571f1e9&pageId=6a72d76967839bf43da9e746&version=1",
+    "https://docs.apiwiz.io/guides?guideId=6ac75d04a997220630a0850e&pageId=6ac75d04a997220630a08511",
+    "https://docs.apiwiz.io/guides?guideId=6a9fb24667f2ddaf4b7692f3&pageId=6aec980f013d399772c19d50",
+    "https://docs.apiwiz.io/guides?guideId=6a5f9f0569d1ae970571d985&pageId=6ae889bf013d399772c17d59&version=1",
+    "https://docs.apiwiz.io/guides?guideId=6a5f788869d1ae970571cb46&pageId=6ab0fbb7dfd45349cb8bd7a4",
+    "https://docs.apiwiz.io/guides?guideId=6a606c8569d1ae970571f25e&pageId=6ab0fc69dfd45349cb8bd84e",
+    "https://docs.apiwiz.io/guides?guideId=6a367668cf1933e4d4c177b2&groupId=Application+Logs&pageId=6a38d9f2cf1933e4d4c19da7",
+    "https://docs.apiwiz.io/guides?guideId=6a367668cf1933e4d4c177b2&groupId=API+Tracing&pageId=6a390891cf1933e4d4c1a4f9",
+    "https://docs.apiwiz.io/guides?guideId=6a367668cf1933e4d4c177b2&groupId=Metrics&pageId=6a390ceccf1933e4d4c1a624",
+    "https://docs.apiwiz.io/guides?guideId=6a3b5896196683f9c8784e55&groupId=API+Security&pageId=6a3b5b97196683f9c8784f05",
+    "https://docs.apiwiz.io/guides?guideId=6a3b5896196683f9c8784e55&groupId=API+Compliance&pageId=6a3cd44fd0dd14afc2778d47",
+    "https://docs.apiwiz.io/guides?guideId=6a3e4194d0dd14afc277b1de&groupId=Monetization&pageId=6a449b67777f9d62fa7511ca",
+    "https://docs.apiwiz.io/guides?guideId=6a3e41fcd0dd14afc277b20f&groupId=APIwiz+Settings&pageId=6a4362c8777f9d62fa74fd00#a5d7809e-c1e8-45b8-b976-03aa87627208"
+  ],
+  "empty_headings": 106,
+  "pages_written": 391
+}

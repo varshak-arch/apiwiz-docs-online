@@ -7,13 +7,25 @@ from pathlib import Path
 SRC = Path(sys.argv[1]); SITE = Path(sys.argv[2])
 DOCS = SITE / 'src/content/docs'; IMG = SITE / 'src/assets/images'
 
+# Sidebar sections, in order, and the source folders each one holds (in order).
 TOPICS = {
-  'get-started': ('Get started', ['Get started with APIwiz', 'Vendor-managed platform', 'Deployment and Installation', 'Access control', 'Settings']),
-  'design': ('Design & govern', ['API Design', 'API Linting', 'API Compliance', 'API Security', 'API Catalog', 'Service Registry', 'Consent Management']),
-  'observe': ('Observe', ['API Insights', 'API Transaction Logs', 'Application Logs', 'API Tracing', 'API Monitoring', 'Metrics', 'APIwiz traffic hooks', 'APIwiz traffic agent hooks']),
-  'monetize': ('Marketplace & monetization', ['API Marketplace', 'API Monetization']),
-  'integrations': ('Gateways & integrations', ['Apigee', 'AWS', 'Azure', 'Axway', 'Kong', 'KrakenD', 'Nginx', 'Connectors']),
+  'user-onboarding': ('User onboarding', ['Get started with APIwiz', 'Vendor-managed platform', 'Deployment and Installation', 'Access control']),
+  'plan-and-design': ('Plan and Design', ['API Design', 'API Linting', 'API Catalog']),
+  'federated-gateways': ('Federated Gateways', ['Nginx', 'Apigee', 'AWS', 'Axway', 'Azure', 'Kong', 'KrakenD']),
+  'observability-and-monitoring': ('Observability and Monitoring', ['API Transaction Logs', 'Application Logs', 'API Tracing', 'Metrics', 'API Monitoring', 'API Insights']),
+  'security-and-compliance': ('Security and Compliance', ['API Security', 'API Compliance']),
+  'utilities': ('Utilities', ['Consent Management', 'Service Registry']),
+  'marketplace-and-monetization': ('Marketplace and Monetization', ['API Monetization', 'API Marketplace']),
+  'configurations-and-settings': ('Configurations and Settings', ['Settings', 'Connectors']),
+  'agent-based-instrumentation': ('Agent-based Instrumentation', ['APIwiz traffic hooks', 'APIwiz traffic agent hooks']),
 }
+# Source folder names shown under a different name in the new sidebar.
+RENAME = {'Deployment and Installation': 'Self-hosted platform'}
+SECRETS = [
+  (re.compile(r'xox([abposr])-[A-Za-z0-9-]{10,}'), r'xox\1-your-slack-token'),
+  (re.compile(r'ghp_[A-Za-z0-9]{20,}'), 'ghp_your-github-token'),
+  (re.compile(r'AKIA[0-9A-Z]{16}'), 'AKIAYOURACCESSKEYID'),
+]
 FIRST = ['overview', 'introduction', 'why apiwiz', 'getting started', 'get started', 'quickstart']
 
 def slug(s):
@@ -32,7 +44,7 @@ for path in sorted(SRC.rglob('*.md')):
     m = FM.match(raw)
     meta = dict(re.findall(r'^(\w+):\s*"?(.*?)"?\s*$', m.group(1), re.M)) if m else {}
     body = raw[m.end():] if m else raw
-    parts = [slug(p) for p in rel.parts[:-1]]
+    parts = [slug(RENAME.get(p, p)) for p in rel.parts[:-1]]
     out = Path(folder_topic[rel.parts[0]], *parts, (slug(path.stem) if slug(path.stem) != 'index' else 'indexes') + '.md')
     pages.append(dict(src=rel, out=out, title=meta.get('title', path.stem), pageId=meta.get('pageId'), body=body, size=len(raw)))
 
@@ -90,6 +102,8 @@ for p in kept:
     # Escape placeholder "tags" like <your-host> outside code so they render as text.
     body = ''.join(seg if i % 2 else escape_text(seg) for i, seg in enumerate(FENCE.split(body)))
     body = body.replace('\\-', '-')
+    for rx, rep in SECRETS:
+        body = rx.sub(rep, body)
     report['empty_headings'] += len(re.findall(r'^#{2,6} .+\n\s*\n(?=#{2,6} )', body, re.M))
     stem = p['out'].stem.replace('-', ' ')
     order = FIRST.index(stem) + 1 if stem in FIRST else None
@@ -99,7 +113,14 @@ for p in kept:
     out_md.parent.mkdir(parents=True, exist_ok=True)
     out_md.write_text('\n'.join(fm) + '\n' + body.lstrip('\n'), encoding='utf-8')
 
+labels = {}
+for d in SRC.rglob('*'):
+    if d.is_dir():
+        r = d.relative_to(SRC)
+        labels['/'.join([folder_topic[r.parts[0]]] + [slug(RENAME.get(x, x)) for x in r.parts])] = RENAME.get(d.name, d.name)
+nav = {'sections': [{'id': t, 'label': l, 'folders': [slug(RENAME.get(f, f)) for f in fs]} for t, (l, fs) in TOPICS.items()],
+       'folderLabels': dict(sorted(labels.items()))}
+json.dump(nav, open(SITE / 'src/navigation.json', 'w'), indent=2)
 report['pages_written'] = len(kept)
-report['topics'] = {t: {'label': l, 'folders': [(f, slug(f)) for f in fs]} for t, (l, fs) in TOPICS.items()}
 json.dump(report, open(SITE / 'migration-report.json', 'w'), indent=2, default=str)
 print(json.dumps({k: (v if not isinstance(v, list) else len(v)) for k, v in report.items() if k != 'topics'}, indent=1))

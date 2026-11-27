@@ -14,11 +14,11 @@ npm run build    # static site in dist/
 
 | Path | What it is |
 | --- | --- |
-| `src/content/docs/<topic>/<folder>/*.md` | Doc pages. Each top-level folder is a tab in the header. |
-| `src/navigation.json` | Tab names, icons, landing links, folder order and folder labels. |
+| `src/content/docs/<section>/<folder>/*.md` | Doc pages. Each top-level folder is a sidebar section (User onboarding, Plan and Design, ...). |
+| `src/navigation.json` | Section names and order, the folders in each section, and folder labels. |
 | `scripts/sidebar.mjs` | Builds the sidebar from the folders, so new pages appear automatically. |
 | `src/assets/images/` | Screenshots (WebP), referenced from pages by relative path. |
-| `src/components/` | Header with tabs, sidebar, page title with "Copy page", feedback footer. |
+| `src/components/` | Header, page title with "Copy page", feedback footer. |
 | `src/styles/custom.css` | Brand colours, typography and layout tweaks. |
 
 ## Adding a page

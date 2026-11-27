@@ -1,133 +1,147 @@
 {
-  "topics": [
+  "sections": [
     {
-      "id": "get-started",
-      "label": "Get started",
-      "icon": "rocket",
-      "link": "/get-started/get-started-with-apiwiz/introduction/",
+      "id": "user-onboarding",
+      "label": "User onboarding",
       "folders": [
         "get-started-with-apiwiz",
         "vendor-managed-platform",
-        "deployment-and-installation",
-        "access-control",
-        "settings"
+        "self-hosted-platform",
+        "access-control"
       ]
     },
     {
-      "id": "design",
-      "label": "Design & govern",
-      "icon": "pencil",
-      "link": "/design/api-design/introduction/",
+      "id": "plan-and-design",
+      "label": "Plan and Design",
       "folders": [
         "api-design",
         "api-linting",
-        "api-compliance",
-        "api-security",
-        "api-catalog",
-        "service-registry",
-        "consent-management"
+        "api-catalog"
       ]
     },
     {
-      "id": "observe",
-      "label": "Observe",
-      "icon": "magnifier",
-      "link": "/observe/api-insights/overview/",
+      "id": "federated-gateways",
+      "label": "Federated Gateways",
       "folders": [
-        "api-insights",
+        "nginx",
+        "apigee",
+        "aws",
+        "axway",
+        "azure",
+        "kong",
+        "krakend"
+      ]
+    },
+    {
+      "id": "observability-and-monitoring",
+      "label": "Observability and Monitoring",
+      "folders": [
         "api-transaction-logs",
         "application-logs",
         "api-tracing",
-        "api-monitoring",
         "metrics",
+        "api-monitoring",
+        "api-insights"
+      ]
+    },
+    {
+      "id": "security-and-compliance",
+      "label": "Security and Compliance",
+      "folders": [
+        "api-security",
+        "api-compliance"
+      ]
+    },
+    {
+      "id": "utilities",
+      "label": "Utilities",
+      "folders": [
+        "consent-management",
+        "service-registry"
+      ]
+    },
+    {
+      "id": "marketplace-and-monetization",
+      "label": "Marketplace and Monetization",
+      "folders": [
+        "api-monetization",
+        "api-marketplace"
+      ]
+    },
+    {
+      "id": "configurations-and-settings",
+      "label": "Configurations and Settings",
+      "folders": [
+        "settings",
+        "connectors"
+      ]
+    },
+    {
+      "id": "agent-based-instrumentation",
+      "label": "Agent-based Instrumentation",
+      "folders": [
         "apiwiz-traffic-hooks",
         "apiwiz-traffic-agent-hooks"
-      ]
-    },
-    {
-      "id": "monetize",
-      "label": "Marketplace & monetization",
-      "icon": "star",
-      "link": "/monetize/api-marketplace/overview/",
-      "folders": [
-        "api-marketplace",
-        "api-monetization"
-      ]
-    },
-    {
-      "id": "integrations",
-      "label": "Gateways & integrations",
-      "icon": "puzzle",
-      "link": "/integrations/apigee/overview/",
-      "folders": [
-        "apigee",
-        "aws",
-        "azure",
-        "axway",
-        "kong",
-        "krakend",
-        "nginx",
-        "connectors"
       ]
     }
   ],
   "folderLabels": {
-    "design/api-catalog": "API Catalog",
-    "design/api-compliance": "API Compliance",
-    "design/api-compliance/additional-resources": "Additional resources",
-    "design/api-design": "API Design",
-    "design/api-design/additional-resources": "Additional resources",
-    "design/api-design/async-api": "Async API",
-    "design/api-design/data-dictionary": "Data Dictionary",
-    "design/api-design/graphql": "GraphQL",
-    "design/api-design/oas": "OAS",
-    "design/api-design/soap": "SOAP",
-    "design/api-linting": "API Linting",
-    "design/api-security": "API Security",
-    "design/api-security/additional-resources": "Additional resources",
-    "design/consent-management": "Consent Management",
-    "design/service-registry": "Service Registry",
-    "get-started/access-control": "Access control",
-    "get-started/deployment-and-installation": "Deployment and Installation",
-    "get-started/deployment-and-installation/node-setup": "Node setup",
-    "get-started/deployment-and-installation/production-installation": "Production installation",
-    "get-started/deployment-and-installation/saas-deployment": "SaaS Deployment",
-    "get-started/get-started-with-apiwiz": "Get started with APIwiz",
-    "get-started/settings": "Settings",
-    "get-started/vendor-managed-platform": "Vendor-managed platform",
-    "integrations/apigee": "Apigee",
-    "integrations/aws": "AWS",
-    "integrations/axway": "Axway",
-    "integrations/azure": "Azure",
-    "integrations/connectors": "Connectors",
-    "integrations/kong": "Kong",
-    "integrations/krakend": "KrakenD",
-    "integrations/nginx": "Nginx",
-    "monetize/api-marketplace": "API Marketplace",
-    "monetize/api-marketplace/account-and-billing": "Account and Billing",
-    "monetize/api-marketplace/core-usage": "Core Usage",
-    "monetize/api-marketplace/setup-and-configuration": "Setup and configuration",
-    "monetize/api-marketplace/support-and-administration": "Support and Administration",
-    "monetize/api-monetization": "API Monetization",
-    "monetize/api-monetization/configure-entities": "Configure entities",
-    "monetize/api-monetization/configure-monetization-entities": "Configure monetization entities",
-    "monetize/api-monetization/provider-side-analytics": "Provider-side analytics",
-    "monetize/api-monetization/reconciliation-and-dispute": "Reconciliation and dispute",
-    "monetize/api-monetization/reconciliation-and-dispute-management": "Reconciliation and dispute management",
-    "observe/api-insights": "API Insights",
-    "observe/api-monitoring": "API Monitoring",
-    "observe/api-monitoring/build-and-monitor": "Build and monitor",
-    "observe/api-monitoring/manage": "Manage",
-    "observe/api-tracing": "API Tracing",
-    "observe/api-transaction-logs": "API Transaction Logs",
-    "observe/apiwiz-traffic-agent-hooks": "APIwiz traffic agent hooks",
-    "observe/apiwiz-traffic-agent-hooks/operator-java-instrumentation": "Operator Java instrumentation",
-    "observe/apiwiz-traffic-hooks": "APIwiz traffic hooks",
-    "observe/apiwiz-traffic-hooks/capture-traffic-from-dotnet": "Capture traffic from .NET",
-    "observe/apiwiz-traffic-hooks/capture-traffic-from-java": "Capture traffic from Java",
-    "observe/apiwiz-traffic-hooks/operator-java-instrumentation": "Operator Java instrumentation",
-    "observe/application-logs": "Application Logs",
-    "observe/metrics": "Metrics",
-    "observe/metrics/application-and-infrastructure-metrics": "Application and Infrastructure metrics"
+    "agent-based-instrumentation/apiwiz-traffic-agent-hooks": "APIwiz traffic agent hooks",
+    "agent-based-instrumentation/apiwiz-traffic-agent-hooks/operator-java-instrumentation": "Operator Java instrumentation",
+    "agent-based-instrumentation/apiwiz-traffic-hooks": "APIwiz traffic hooks",
+    "agent-based-instrumentation/apiwiz-traffic-hooks/capture-traffic-from-dotnet": "Capture traffic from .NET",
+    "agent-based-instrumentation/apiwiz-traffic-hooks/capture-traffic-from-java": "Capture traffic from Java",
+    "agent-based-instrumentation/apiwiz-traffic-hooks/operator-java-instrumentation": "Operator Java instrumentation",
+    "configurations-and-settings/connectors": "Connectors",
+    "configurations-and-settings/settings": "Settings",
+    "federated-gateways/apigee": "Apigee",
+    "federated-gateways/aws": "AWS",
+    "federated-gateways/axway": "Axway",
+    "federated-gateways/azure": "Azure",
+    "federated-gateways/kong": "Kong",
+    "federated-gateways/krakend": "KrakenD",
+    "federated-gateways/nginx": "Nginx",
+    "marketplace-and-monetization/api-marketplace": "API Marketplace",
+    "marketplace-and-monetization/api-marketplace/account-and-billing": "Account and Billing",
+    "marketplace-and-monetization/api-marketplace/core-usage": "Core Usage",
+    "marketplace-and-monetization/api-marketplace/setup-and-configuration": "Setup and configuration",
+    "marketplace-and-monetization/api-marketplace/support-and-administration": "Support and Administration",
+    "marketplace-and-monetization/api-monetization": "API Monetization",
+    "marketplace-and-monetization/api-monetization/configure-entities": "Configure entities",
+    "marketplace-and-monetization/api-monetization/configure-monetization-entities": "Configure monetization entities",
+    "marketplace-and-monetization/api-monetization/provider-side-analytics": "Provider-side analytics",
+    "marketplace-and-monetization/api-monetization/reconciliation-and-dispute": "Reconciliation and dispute",
+    "marketplace-and-monetization/api-monetization/reconciliation-and-dispute-management": "Reconciliation and dispute management",
+    "observability-and-monitoring/api-insights": "API Insights",
+    "observability-and-monitoring/api-monitoring": "API Monitoring",
+    "observability-and-monitoring/api-monitoring/build-and-monitor": "Build and monitor",
+    "observability-and-monitoring/api-monitoring/manage": "Manage",
+    "observability-and-monitoring/api-tracing": "API Tracing",
+    "observability-and-monitoring/api-transaction-logs": "API Transaction Logs",
+    "observability-and-monitoring/application-logs": "Application Logs",
+    "observability-and-monitoring/metrics": "Metrics",
+    "observability-and-monitoring/metrics/application-and-infrastructure-metrics": "Application and Infrastructure metrics",
+    "plan-and-design/api-catalog": "API Catalog",
+    "plan-and-design/api-design": "API Design",
+    "plan-and-design/api-design/additional-resources": "Additional resources",
+    "plan-and-design/api-design/async-api": "Async API",
+    "plan-and-design/api-design/data-dictionary": "Data Dictionary",
+    "plan-and-design/api-design/graphql": "GraphQL",
+    "plan-and-design/api-design/oas": "OAS",
+    "plan-and-design/api-design/soap": "SOAP",
+    "plan-and-design/api-linting": "API Linting",
+    "security-and-compliance/api-compliance": "API Compliance",
+    "security-and-compliance/api-compliance/additional-resources": "Additional resources",
+    "security-and-compliance/api-security": "API Security",
+    "security-and-compliance/api-security/additional-resources": "Additional resources",
+    "user-onboarding/access-control": "Access control",
+    "user-onboarding/get-started-with-apiwiz": "Get started with APIwiz",
+    "user-onboarding/self-hosted-platform": "Self-hosted platform",
+    "user-onboarding/self-hosted-platform/node-setup": "Node setup",
+    "user-onboarding/self-hosted-platform/production-installation": "Production installation",
+    "user-onboarding/self-hosted-platform/saas-deployment": "SaaS Deployment",
+    "user-onboarding/vendor-managed-platform": "Vendor-managed platform",
+    "utilities/consent-management": "Consent Management",
+    "utilities/service-registry": "Service Registry"
   }
 }
